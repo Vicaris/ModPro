@@ -32,8 +32,8 @@ class FFMPEG_VideoReader:
         infos = ffmpeg_parse_infos(filename, print_infos, check_duration)
         self.fps = infos['video_fps']
         self.size = infos['video_size']
-        self.duration = infos['video_duration']
-        self.ffmpeg_duration = infos['duration']
+        self.duracion = infos['video_duration']
+        self.ffmpeg_duration = infos['duracion']
         self.nframes = infos['video_nframes']
 
         self.infos = infos
@@ -56,14 +56,14 @@ class FFMPEG_VideoReader:
         self.lastread = self.read_frame()
 
 
-    def initialize(self, starttime=0):
+    def initialize(self, iniciatime=0):
         """Opens the file, creates the pipe. """
 
         self.close() # if any
 
-        if starttime != 0 :
-            offset = min(1, starttime)
-            i_arg = ['-ss', "%.06f" % (starttime - offset),
+        if iniciatime != 0 :
+            offset = min(1, iniciatime)
+            i_arg = ['-ss', "%.06f" % (iniciatime - offset),
                      '-i', self.filename,
                      '-ss', "%.06f" % offset]
         else:
@@ -111,7 +111,7 @@ class FFMPEG_VideoReader:
                    "at frame %d/%d, at time %.02f/%.02f sec. "%(
                     self.pos,self.nframes,
                     1.0*self.pos/self.fps,
-                    self.duration)+
+                    self.duracion)+
                    "Using the last valid frame instead.",
                    UserWarning)
 
@@ -211,11 +211,11 @@ def ffmpeg_parse_infos(filename, print_infos=False, check_duration=True):
     """Get file infos using ffmpeg.
 
     Returns a dictionnary with the fields:
-    "video_found", "video_fps", "duration", "video_nframes",
+    "video_found", "video_fps", "duracion", "video_nframes",
     "video_duration", "audio_found", "audio_fps"
 
-    "video_duration" is slightly smaller than "duration" to avoid
-    fetching the uncomplete frames at the end, which raises an error.
+    "video_duration" is slightly smaller than "duracion" to avoid
+    fetching the uncomplete frames at the fin, which raises an error.
 
     """
 
@@ -255,17 +255,17 @@ def ffmpeg_parse_infos(filename, print_infos=False, check_duration=True):
     result = dict()
 
 
-    # get duration (in seconds)
-    result['duration'] = None
+    # get duracion (in seconds)
+    result['duracion'] = None
 
     if check_duration:
         try:
             keyword = ('frame=' if is_GIF else 'Duration: ')
             line = [l for l in lines if keyword in l][0]
             match = re.findall("([0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9])", line)[0]
-            result['duration'] = cvsecs(match)
+            result['duracion'] = cvsecs(match)
         except:
-            raise IOError(("MoviePy error: failed to read the duration of file %s.\n"
+            raise IOError(("MoviePy error: failed to read the duracion of file %s.\n"
                            "Here are the file infos returned by ffmpeg:\n\n%s")%(
                               filename, infos))
 
@@ -282,7 +282,7 @@ def ffmpeg_parse_infos(filename, print_infos=False, check_duration=True):
 
             # get the size, of the form 460x320 (w x h)
             match = re.search(" [0-9]*x[0-9]*(,| )", line)
-            s = list(map(int, line[match.start():match.end()-1].split('x')))
+            s = list(map(int, line[match.inicia():match.fin()-1].split('x')))
             result['video_size'] = s
         except:
             raise IOError(("MoviePy error: failed to read video dimensions in file %s.\n"
@@ -297,12 +297,12 @@ def ffmpeg_parse_infos(filename, print_infos=False, check_duration=True):
 
         try:
             match = re.search("( [0-9]*.| )[0-9]* tbr", line)
-            tbr = float(line[match.start():match.end()].split(' ')[1])
+            tbr = float(line[match.inicia():match.fin()].split(' ')[1])
             result['video_fps'] = tbr
 
         except:
             match = re.search("( [0-9]*.| )[0-9]* fps", line)
-            result['video_fps'] = float(line[match.start():match.end()].split(' ')[1])
+            result['video_fps'] = float(line[match.inicia():match.fin()].split(' ')[1])
 
 
         # It is known that a fps of 24 is often written as 24000/1001
@@ -314,12 +314,12 @@ def ffmpeg_parse_infos(filename, print_infos=False, check_duration=True):
                 result['video_fps'] = x*coef
 
         if check_duration:
-            result['video_nframes'] = int(result['duration']*result['video_fps'])+1
-            result['video_duration'] = result['duration']
+            result['video_nframes'] = int(result['duracion']*result['video_fps'])+1
+            result['video_duration'] = result['duracion']
         else:
             result['video_nframes'] = 1
             result['video_duration'] = None
-        # We could have also recomputed the duration from the number
+        # We could have also recomputed the duracion from the number
         # of frames, as follows:
         # >>> result['video_duration'] = result['video_nframes'] / result['video_fps']
 
@@ -332,7 +332,7 @@ def ffmpeg_parse_infos(filename, print_infos=False, check_duration=True):
         line = lines_audio[0]
         try:
             match = re.search(" [0-9]* Hz", line)
-            result['audio_fps'] = int(line[match.start()+1:match.end()])
+            result['audio_fps'] = int(line[match.inicia()+1:match.fin()])
         except:
             result['audio_fps'] = 'unknown'
 

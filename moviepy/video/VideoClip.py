@@ -93,7 +93,7 @@ class VideoClip(Clip):
 
     """
 
-    def __init__(self, make_frame=None, ismask=False, duration=None,
+    def __init__(self, make_frame=None, ismask=False, duracion=None,
                  has_constant_size=True):
         Clip.__init__(self)
         self.mask = None
@@ -105,9 +105,9 @@ class VideoClip(Clip):
             self.size = self.get_frame(0).shape[:2][::-1]
         self.ismask = ismask
         self.has_constant_size=has_constant_size
-        if duration is not None:
-            self.duration = duration
-            self.end = duration
+        if duracion is not None:
+            self.duracion = duracion
+            self.fin = duracion
 
     @property
     def w(self):
@@ -388,10 +388,10 @@ class VideoClip(Clip):
 
         verbose_print(verbose, "[MoviePy] Writing frames %s." % (nameformat))
 
-        tt = np.arange(0, self.duration, 1.0 / fps)
+        tt = np.arange(0, self.duracion, 1.0 / fps)
 
         filenames = []
-        total = int(self.duration / fps) + 1
+        total = int(self.duracion / fps) + 1
         for i, t in tqdm(enumerate(tt), total=total):
             name = nameformat % i
             filenames.append(name)
@@ -493,14 +493,14 @@ class VideoClip(Clip):
 
         left = None if (ta == 0) else self.subclip(0, ta)
         center = self.subclip(ta, tb).fx(fx, **kwargs)
-        right = None if (tb is None) else self.subclip(t_start=tb)
+        right = None if (tb is None) else self.subclip(t_inicia=tb)
 
         clips = [c for c in [left, center, right] if c is not None]
 
         # beurk, have to find other solution
         from moviepy.video.compositing.concatenate import concatenate_videoclips
 
-        return concatenate_videoclips(clips).set_start(self.start)
+        return concatenate_videoclips(clips).set_inicia(self.inicia)
 
     # IMAGE FILTERS
 
@@ -528,7 +528,7 @@ class VideoClip(Clip):
         if self.ismask and picture.max() != 0:
             return np.minimum(1, picture + self.blit_on(np.zeros(framesize), t))
 
-        ct = t - self.start  # clip time
+        ct = t - self.inicia  # clip time
 
         # GET IMAGE AND MASK IF ANY
 
@@ -582,11 +582,11 @@ class VideoClip(Clip):
         """
         if self.has_constant_size:
             mask = ColorClip(self.size, 1.0, ismask=True)
-            return self.set_mask(mask.set_duration(self.duration))
+            return self.set_mask(mask.set_duration(self.duracion))
         else:
             make_frame = lambda t: np.ones(self.get_frame(t).shape[:2], dtype=float)
             mask = VideoClip(ismask=True, make_frame=make_frame)
-            return self.set_mask(mask.set_duration(self.duration))
+            return self.set_mask(mask.set_duration(self.duracion))
 
 
     def on_color(self, size=None, color=(0, 0, 0), pos=None,
@@ -624,7 +624,7 @@ class VideoClip(Clip):
         colorclip = ColorClip(size, color)
 
         if col_opacity is not None:
-            colorclip = (ColorClip(size, color, duration=self.duration)
+            colorclip = (ColorClip(size, color, duracion=self.duracion)
                          .set_opacity(col_opacity))
             result = CompositeVideoClip([colorclip, self.set_pos(pos)])
         else:
@@ -637,7 +637,7 @@ class VideoClip(Clip):
             new_result = result.to_ImageClip()
             if result.mask is not None:
                 new_result.mask = result.mask.to_ImageClip()
-            return new_result.set_duration(result.duration)
+            return new_result.set_duration(result.duracion)
 
         return result
 
@@ -814,7 +814,7 @@ class DataVideoClip(VideoClip):
         self.fps=fps
         make_frame = lambda t: self.data_to_frame( self.data[int(self.fps*t)])
         VideoClip.__init__(self, make_frame, ismask=ismask,
-               duration=1.0*len(data)/fps, has_constant_size=has_constant_size)
+               duracion=1.0*len(data)/fps, has_constant_size=has_constant_size)
 
 
 
@@ -848,13 +848,13 @@ class UpdatedVideoClip(VideoClip):
     ismask
       True if the clip is a WxH mask with values in 0-1
 
-    duration
+    duracion
       Duration of the clip, in seconds
           
     """
     
     
-    def __init__(self, world, ismask=False, duration=None):
+    def __init__(self, world, ismask=False, duracion=None):
         
         self.world = world
         def make_frame(t):
@@ -862,7 +862,7 @@ class UpdatedVideoClip(VideoClip):
                 world.update()
             return world.to_frame()
         VideoClip.__init__(self, make_frame= make_frame,
-                               ismask=ismask, duration=duration)
+                               ismask=ismask, duracion=duracion)
 
 
 
@@ -915,9 +915,9 @@ class ImageClip(VideoClip):
 
 
     def __init__(self, img, ismask=False, transparent=True,
-                 fromalpha=False, duration=None):
+                 fromalpha=False, duracion=None):
 
-        VideoClip.__init__(self, ismask=ismask, duration=duration)
+        VideoClip.__init__(self, ismask=ismask, duracion=duracion)
 
         if isinstance(img, str):
             img = imread(img)
@@ -1033,11 +1033,11 @@ class ColorClip(ImageClip):
     """
 
 
-    def __init__(self, size, col=(0, 0, 0), ismask=False, duration=None):
+    def __init__(self, size, col=(0, 0, 0), ismask=False, duracion=None):
         w, h = size
         shape = (h, w) if np.isscalar(col) else (h, w, len(col))
         ImageClip.__init__(self, np.tile(col, w * h).reshape(shape),
-                           ismask=ismask, duration=duration)
+                           ismask=ismask, duracion=duracion)
 
 
 class TextClip(ImageClip):
@@ -1202,7 +1202,7 @@ class TextClip(ImageClip):
         lines = result.splitlines()
 
         if arg == 'font':
-            return [l[8:] for l in lines if l.startswith("  Font:")]
+            return [l[8:] for l in lines if l.iniciaswith("  Font:")]
         elif arg == 'color':
             return [l.split(" ")[1] for l in lines[2:]]
 

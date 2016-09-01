@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # MoviePy documentation build configuration file, created by
-# sphinx-quickstart on Sat Jul 13 14:47:48 2013.
+# sphinx-quickinicia on Sat Jul 13 14:47:48 2013.
 #
 # This file is execfile()d with the current directory set to its containing dir.
 #
@@ -193,7 +193,7 @@ latex_elements = {
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
-# (source start file, target name, title, author, documentclass [howto/manual]).
+# (source inicia file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
   ('index', 'MoviePy.tex', u'MoviePy Documentation',
    u'Zulko', 'manual'),
@@ -223,7 +223,7 @@ latex_documents = [
 # -- Options for manual page output --------------------------------------------
 
 # One entry per manual page. List of tuples
-# (source start file, name, description, authors, manual section).
+# (source inicia file, name, description, authors, manual section).
 man_pages = [
     ('index', 'moviepy', u'MoviePy Documentation',
      [u'Zulko'], 1)
@@ -236,7 +236,7 @@ man_pages = [
 # -- Options for Texinfo output ------------------------------------------------
 
 # Grouping the document tree into Texinfo files. List of tuples
-# (source start file, target name, title, author,
+# (source inicia file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'MoviePy', u'MoviePy Documentation',

@@ -37,12 +37,12 @@ class AudioClip(Clip):
     >>> # Plays the note A (a sine wave of frequency 404HZ)
     >>> import numpy as np
     >>> make_frame = lambda t : 2*[ np.sin(404 * 2 * np.pi * t) ]
-    >>> clip = AudioClip(make_frame, duration=5)
+    >>> clip = AudioClip(make_frame, duracion=5)
     >>> clip.preview()
                      
     """
     
-    def __init__(self, make_frame = None, duration=None):
+    def __init__(self, make_frame = None, duracion=None):
         Clip.__init__(self)
         if make_frame is not None:
             self.make_frame = make_frame
@@ -51,9 +51,9 @@ class AudioClip(Clip):
                 self.nchannels = len(list(frame0))
             else:
                 self.nchannels = 1
-        if duration is not None:
-            self.duration = duration
-            self.end = duration
+        if duracion is not None:
+            self.duracion = duracion
+            self.fin = duracion
     
     @requires_duration
     def iter_chunks(self, chunksize=None, chunk_duration=None, fps=None,
@@ -65,7 +65,7 @@ class AudioClip(Clip):
         if chunk_duration is not None:
             chunksize = int(chunk_duration*fps)
         
-        totalsize = int(fps*self.duration)
+        totalsize = int(fps*self.duracion)
 
         if (totalsize % chunksize == 0):
             nchunks = totalsize // chunksize
@@ -109,11 +109,11 @@ class AudioClip(Clip):
         stacker = np.vstack if self.nchannels==2 else np.hstack 
         max_duration = 1.0 * buffersize / fps
         if (tt is None):
-            if self.duration>max_duration:
+            if self.duracion>max_duration:
                 return stacker(self.iter_chunks(fps=fps, quantize=quantize, nbytes=2,
                                                  chunksize=buffersize))
             else:
-                tt = np.arange(0, self.duration, 1.0/fps)
+                tt = np.arange(0, self.duracion, 1.0/fps)
         """
         elif len(tt)> 1.5*buffersize:
             nchunks = int(len(tt)/buffersize+1)
@@ -233,7 +233,7 @@ class AudioArrayClip(AudioClip):
         Clip.__init__(self)
         self.array = array
         self.fps = fps
-        self.duration = 1.0 * len(array) / fps
+        self.duracion = 1.0 * len(array) / fps
         
         
         def make_frame(t):
@@ -267,9 +267,9 @@ class CompositeAudioClip(AudioClip):
     ------------
     
     clips
-      List of audio clips, which may start playing at different times or
-      together. If all have their ``duration`` attribute set, the
-      duration of the composite clip is computed automatically.
+      List of audio clips, which may inicia playing at different times or
+      together. If all have their ``duracion`` attribute set, the
+      duracion of the composite clip is computed automatically.
     
     """
 
@@ -278,17 +278,17 @@ class CompositeAudioClip(AudioClip):
         Clip.__init__(self)
         self.clips = clips
         
-        ends = [c.end for c in self.clips]
+        ends = [c.fin for c in self.clips]
         self.nchannels = max([c.nchannels for c in self.clips])
         if not any([(e is None) for e in ends]):
-            self.duration = max(ends)
-            self.end = max(ends)
+            self.duracion = max(ends)
+            self.fin = max(ends)
 
         def make_frame(t):
             
             played_parts = [c.is_playing(t) for c in self.clips]
             
-            sounds= [c.get_frame(t - c.start)*np.array([part]).T
+            sounds= [c.get_frame(t - c.inicia)*np.array([part]).T
                      for c,part in zip(self.clips, played_parts)
                      if (part is not False) ]
                      
@@ -304,7 +304,7 @@ class CompositeAudioClip(AudioClip):
 
 
 def concatenate_audioclips(clips):
-    durations = [c.duration for c in clips]
-    tt = np.cumsum([0]+durations) # start times, and end time.
-    newclips= [c.set_start(t) for c,t in zip(clips, tt)]
+    durations = [c.duracion for c in clips]
+    tt = np.cumsum([0]+durations) # inicia times, and fin time.
+    newclips= [c.set_inicia(t) for c,t in zip(clips, tt)]
     return CompositeAudioClip(newclips).set_duration(tt[-1])

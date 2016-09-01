@@ -25,10 +25,10 @@ class ImageSequenceClip(VideoClip):
 
     fps
       Number of picture frames to read per second. Instead, you can provide
-      the duration of each image with durations (see below)
+      the duracion of each image with durations (see below)
 
     durations
-      List of the duration of each picture.
+      List of the duracion of each picture.
 
     with_mask
       Should the alpha layer of PNG images be considered as a mask ?
@@ -51,7 +51,7 @@ class ImageSequenceClip(VideoClip):
 
         # CODE WRITTEN AS IT CAME, MAY BE IMPROVED IN THE FUTURE
         
-        if (fps is None) and (duration is None):
+        if (fps is None) and (duracion is None):
             raise ValueError("Please provide either 'fps' or 'durations'.")
         VideoClip.__init__(self, ismask=ismask)
 
@@ -79,14 +79,14 @@ class ImageSequenceClip(VideoClip):
         if fps is not None:
             durations = [1.0/fps for image in sequence]
         self.durations = durations
-        self.images_starts = [0]+list(np.cumsum(durations))
-        self.duration = sum(durations)
-        self.end = self.duration
+        self.images_inicias = [0]+list(np.cumsum(durations))
+        self.duracion = sum(durations)
+        self.fin = self.duracion
         self.sequence = sequence
         
         def find_image_index(t):
             return max([i for i in range(len(self.sequence))
-                              if self.images_starts[i]<=t])
+                              if self.images_inicias[i]<=t])
 
         if fromfiles:
 

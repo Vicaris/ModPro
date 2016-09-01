@@ -37,13 +37,13 @@ if "%1" == "help" (
 	echo.  pseudoxml  to make pseudoxml-XML files for display purposes
 	echo.  linkcheck  to check all external links for integrity
 	echo.  doctest    to run all doctests embedded in the documentation if enabled
-	goto end
+	goto fin
 )
 
 if "%1" == "clean" (
 	for /d %%i in (%BUILDDIR%\*) do rmdir /q /s %%i
 	del /q /s %BUILDDIR%\*
-	goto end
+	goto fin
 )
 
 
@@ -65,7 +65,7 @@ if "%1" == "html" (
 	if errorlevel 1 exit /b 1
 	echo.
 	echo.Build finished. The HTML pages are in %BUILDDIR%/html.
-	goto end
+	goto fin
 )
 
 if "%1" == "dirhtml" (
@@ -73,7 +73,7 @@ if "%1" == "dirhtml" (
 	if errorlevel 1 exit /b 1
 	echo.
 	echo.Build finished. The HTML pages are in %BUILDDIR%/dirhtml.
-	goto end
+	goto fin
 )
 
 if "%1" == "singlehtml" (
@@ -81,7 +81,7 @@ if "%1" == "singlehtml" (
 	if errorlevel 1 exit /b 1
 	echo.
 	echo.Build finished. The HTML pages are in %BUILDDIR%/singlehtml.
-	goto end
+	goto fin
 )
 
 if "%1" == "pickle" (
@@ -89,7 +89,7 @@ if "%1" == "pickle" (
 	if errorlevel 1 exit /b 1
 	echo.
 	echo.Build finished; now you can process the pickle files.
-	goto end
+	goto fin
 )
 
 if "%1" == "json" (
@@ -97,7 +97,7 @@ if "%1" == "json" (
 	if errorlevel 1 exit /b 1
 	echo.
 	echo.Build finished; now you can process the JSON files.
-	goto end
+	goto fin
 )
 
 if "%1" == "htmlhelp" (
@@ -106,7 +106,7 @@ if "%1" == "htmlhelp" (
 	echo.
 	echo.Build finished; now you can run HTML Help Workshop with the ^
 .hhp project file in %BUILDDIR%/htmlhelp.
-	goto end
+	goto fin
 )
 
 if "%1" == "qthelp" (
@@ -118,7 +118,7 @@ if "%1" == "qthelp" (
 	echo.^> qcollectiongenerator %BUILDDIR%\qthelp\MoviePy.qhcp
 	echo.To view the help file:
 	echo.^> assistant -collectionFile %BUILDDIR%\qthelp\MoviePy.ghc
-	goto end
+	goto fin
 )
 
 if "%1" == "devhelp" (
@@ -126,7 +126,7 @@ if "%1" == "devhelp" (
 	if errorlevel 1 exit /b 1
 	echo.
 	echo.Build finished.
-	goto end
+	goto fin
 )
 
 if "%1" == "epub" (
@@ -134,7 +134,7 @@ if "%1" == "epub" (
 	if errorlevel 1 exit /b 1
 	echo.
 	echo.Build finished. The epub file is in %BUILDDIR%/epub.
-	goto end
+	goto fin
 )
 
 if "%1" == "latex" (
@@ -142,7 +142,7 @@ if "%1" == "latex" (
 	if errorlevel 1 exit /b 1
 	echo.
 	echo.Build finished; the LaTeX files are in %BUILDDIR%/latex.
-	goto end
+	goto fin
 )
 
 if "%1" == "latexpdf" (
@@ -152,7 +152,7 @@ if "%1" == "latexpdf" (
 	cd %BUILDDIR%/..
 	echo.
 	echo.Build finished; the PDF files are in %BUILDDIR%/latex.
-	goto end
+	goto fin
 )
 
 if "%1" == "latexpdfja" (
@@ -162,7 +162,7 @@ if "%1" == "latexpdfja" (
 	cd %BUILDDIR%/..
 	echo.
 	echo.Build finished; the PDF files are in %BUILDDIR%/latex.
-	goto end
+	goto fin
 )
 
 if "%1" == "text" (
@@ -170,7 +170,7 @@ if "%1" == "text" (
 	if errorlevel 1 exit /b 1
 	echo.
 	echo.Build finished. The text files are in %BUILDDIR%/text.
-	goto end
+	goto fin
 )
 
 if "%1" == "man" (
@@ -178,7 +178,7 @@ if "%1" == "man" (
 	if errorlevel 1 exit /b 1
 	echo.
 	echo.Build finished. The manual pages are in %BUILDDIR%/man.
-	goto end
+	goto fin
 )
 
 if "%1" == "texinfo" (
@@ -186,7 +186,7 @@ if "%1" == "texinfo" (
 	if errorlevel 1 exit /b 1
 	echo.
 	echo.Build finished. The Texinfo files are in %BUILDDIR%/texinfo.
-	goto end
+	goto fin
 )
 
 if "%1" == "gettext" (
@@ -194,7 +194,7 @@ if "%1" == "gettext" (
 	if errorlevel 1 exit /b 1
 	echo.
 	echo.Build finished. The message catalogs are in %BUILDDIR%/locale.
-	goto end
+	goto fin
 )
 
 if "%1" == "changes" (
@@ -202,7 +202,7 @@ if "%1" == "changes" (
 	if errorlevel 1 exit /b 1
 	echo.
 	echo.The overview file is in %BUILDDIR%/changes.
-	goto end
+	goto fin
 )
 
 if "%1" == "linkcheck" (
@@ -211,7 +211,7 @@ if "%1" == "linkcheck" (
 	echo.
 	echo.Link check complete; look for any errors in the above output ^
 or in %BUILDDIR%/linkcheck/output.txt.
-	goto end
+	goto fin
 )
 
 if "%1" == "doctest" (
@@ -220,7 +220,7 @@ if "%1" == "doctest" (
 	echo.
 	echo.Testing of doctests in the sources finished, look at the ^
 results in %BUILDDIR%/doctest/output.txt.
-	goto end
+	goto fin
 )
 
 if "%1" == "xml" (
@@ -228,7 +228,7 @@ if "%1" == "xml" (
 	if errorlevel 1 exit /b 1
 	echo.
 	echo.Build finished. The XML files are in %BUILDDIR%/xml.
-	goto end
+	goto fin
 )
 
 if "%1" == "pseudoxml" (
@@ -236,7 +236,7 @@ if "%1" == "pseudoxml" (
 	if errorlevel 1 exit /b 1
 	echo.
 	echo.Build finished. The pseudo-XML files are in %BUILDDIR%/pseudoxml.
-	goto end
+	goto fin
 )
 
-:end
+:fin

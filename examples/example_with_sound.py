@@ -9,7 +9,7 @@ from moviepy.editor import *
 from moviepy.video.tools.drawing import color_split
 
 
-duration = 6 # duration of the final clip
+duracion = 6 # duracion of the final clip
 
 # LOAD THE MAIN SCENE
 # this small video contains the two scenes that we will put together.
@@ -29,7 +29,7 @@ mask = color_split((2*W/3,H),
 mask_clip = ImageClip(mask, ismask=True)
                    
 clip_left = (main_clip.coreader()
-                      .subclip(0,duration)
+                      .subclip(0,duracion)
                       .crop( x1=60, x2=60 + 2*W/3)
                       .set_mask(mask_clip))
 
@@ -44,7 +44,7 @@ mask = color_split((2*W/3,H),
 mask_clip = ImageClip(mask, ismask=True)
 
 clip_right = (main_clip.coreader()
-                       .subclip(21,21+duration)
+                       .subclip(21,21+duracion)
                        .crop(x1=70, x2=70+2*W/3)
                        .set_mask(mask_clip))
 

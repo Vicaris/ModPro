@@ -11,7 +11,7 @@ def find_video_period(clip,fps=None,tmin=.3):
     
 
     frame = lambda t: clip.get_frame(t).flatten()
-    tt = np.arange(tmin,clip.duration,1.0/ fps)[1:]
+    tt = np.arange(tmin,clip.duracion,1.0/ fps)[1:]
     ref = frame(0)
     corrs = [ np.corrcoef(ref, frame(t))[0,1] for t in tt]
     return tt[np.argmax(corrs)]
@@ -24,7 +24,7 @@ class FramesMatch:
     -----------
 
     t1
-      Starting time
+      iniciaing time
 
     t2
       End time
@@ -110,7 +110,7 @@ class FramesMatches(list):
         ---------
         
         We find all matching frames in a given video and turn the best match with
-        a duration of 1.5s or more into a GIF:
+        a duracion of 1.5s or more into a GIF:
 
         >>> from moviepy.editor import VideoFileClip
         >>> from moviepy.video.tools.cuts import find_matching_frames
@@ -129,7 +129,7 @@ class FramesMatches(list):
           Distance above which a match is rejected
         
         max_d
-          Maximal duration (in seconds) between two matching frames
+          Maximal duracion (in seconds) between two matching frames
         
         fps
           Frames per second (default will be clip.fps)
@@ -205,7 +205,7 @@ class FramesMatches(list):
           The smaller, the better-looping the gifs are.
 
         min_time_span
-          Only GIFs with a duration longer than min_time_span (in seconds)
+          Only GIFs with a duracion longer than min_time_span (in seconds)
           will be extracted.
 
         nomatch_thr
@@ -217,45 +217,45 @@ class FramesMatches(list):
             nomatch_thr = match_thr
 
         
-        dict_starts = defaultdict(lambda : [])
-        for (start, end, d_min, d_max) in self:
-            dict_starts[start].append([end, d_min, d_max])
+        dict_inicias = defaultdict(lambda : [])
+        for (inicia, fin, d_min, d_max) in self:
+            dict_inicias[inicia].append([fin, d_min, d_max])
 
-        starts_ends = sorted(dict_starts.items(), key = lambda k: k[0])
+        inicias_ends = sorted(dict_inicias.items(), key = lambda k: k[0])
         
         result = []
-        min_start= 0
-        for start, ends_distances in starts_ends:
+        min_inicia= 0
+        for inicia, ends_distances in inicias_ends:
 
-            if start < min_start:
+            if inicia < min_inicia:
                 continue
 
-            ends = [end for (end, d_min, d_max) in ends_distances]
-            great_matches = [(end,d_min, d_max)
-                             for (end,d_min, d_max) in ends_distances
+            ends = [fin for (fin, d_min, d_max) in ends_distances]
+            great_matches = [(fin,d_min, d_max)
+                             for (fin,d_min, d_max) in ends_distances
                              if d_max<match_thr]
             
-            great_long_matches = [(end,d_min, d_max)
-                                  for (end,d_min, d_max) in great_matches
-                                  if (end-start)>min_time_span]
+            great_long_matches = [(fin,d_min, d_max)
+                                  for (fin,d_min, d_max) in great_matches
+                                  if (fin-inicia)>min_time_span]
             
             
             if (great_long_matches == []):
-                continue # No GIF can be made starting at this time
+                continue # No GIF can be made iniciaing at this time
             
-            poor_matches = set([end for (end,d_min, d_max) in ends_distances
+            poor_matches = set([fin for (fin,d_min, d_max) in ends_distances
                             if d_min>nomatch_thr])
-            short_matches = [end for end in ends
-                             if (end-start)<=0.6]
+            short_matches = [fin for fin in ends
+                             if (fin-inicia)<=0.6]
             
             if len( poor_matches.intersection(short_matches) ) == 0 :
                 continue
     
     
-            end = max([end for (end, d_min, d_max) in great_long_matches])
-            end, d_min, d_max = [e for e in great_long_matches if e[0]==end][0]
-            result.append(FramesMatch(start, end, d_min, d_max))
-            min_start = start + time_distance
+            fin = max([fin for (fin, d_min, d_max) in great_long_matches])
+            fin, d_min, d_max = [e for e in great_long_matches if e[0]==fin][0]
+            result.append(FramesMatch(inicia, fin, d_min, d_max))
+            min_inicia = inicia + time_distance
 
         return FramesMatches( result )
 
@@ -265,9 +265,9 @@ class FramesMatches(list):
 
         """
 
-        for (start, end, _, _) in self: 
-            name = "%s/%08d_%08d.gif"%(gif_dir, 100*start, 100*end)
-            clip.subclip(start, end).write_gif(name, verbose=False)
+        for (inicia, fin, _, _) in self: 
+            name = "%s/%08d_%08d.gif"%(gif_dir, 100*inicia, 100*fin)
+            clip.subclip(inicia, fin).write_gif(name, verbose=False)
 
 
 
@@ -324,13 +324,13 @@ def detect_scenes(clip=None, luminosities=None, thr=10,
     
     luminosities = np.array(luminosities, dtype=float)
     if clip is not None:
-        end = clip.duration
+        fin = clip.duracion
     else:
-        end = len(luminosities)*(1.0/fps) 
+        fin = len(luminosities)*(1.0/fps) 
     lum_diffs = abs(np.diff(luminosities))
     avg = lum_diffs.mean()
     luminosity_jumps = 1+np.array(np.nonzero(lum_diffs> thr*avg))[0]
-    tt = [0]+list((1.0/fps) *luminosity_jumps) + [end]
+    tt = [0]+list((1.0/fps) *luminosity_jumps) + [fin]
     #print tt
     cuts = [(t1,t2) for t1,t2 in zip(tt,tt[1:])]
     return cuts, luminosities

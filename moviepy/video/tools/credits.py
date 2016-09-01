@@ -1,5 +1,5 @@
 """
-This module contains different functions to make end and opening
+This module contains different functions to make fin and opening
 credits, even though it is difficult to fill everyone needs in this
 matter.
 """
@@ -66,15 +66,15 @@ def credits1(creditfile,width,stretch=30,color='white',
     with open(creditfile) as f:
         lines = f.readlines()
     
-    lines = filter(lambda x:not x.startswith('\n'),lines) 
+    lines = filter(lambda x:not x.iniciaswith('\n'),lines) 
     texts = []
     oneline=True
     for l in  lines:
-        if not l.startswith('#'):
-            if l.startswith('.blank'):
+        if not l.iniciaswith('#'):
+            if l.iniciaswith('.blank'):
                 for i in range(int(l.split(' ')[1])):
                     texts.append(['\n','\n'])
-            elif  l.startswith('..'):
+            elif  l.iniciaswith('..'):
                 texts.append([l[2:],''])
                 oneline=True
             else:

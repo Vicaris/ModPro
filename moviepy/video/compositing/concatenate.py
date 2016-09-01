@@ -40,7 +40,7 @@ def concatenate_videoclips(clips, method="chain", transition=None,
     -----------
 
     clips
-      A list of video clips which must all have their ``duration``
+      A list of video clips which must all have their ``duracion``
       attributes set.
 
     method
@@ -68,7 +68,7 @@ def concatenate_videoclips(clips, method="chain", transition=None,
         transition = None
 
     
-    tt = np.cumsum([0] + [c.duration for c in clips])
+    tt = np.cumsum([0] + [c.duracion for c in clips])
 
     sizes = [v.size for v in clips]
 
@@ -86,26 +86,26 @@ def concatenate_videoclips(clips, method="chain", transition=None,
         result = VideoClip(ismask = ismask, make_frame = make_frame)
         if any([c.mask is not None for c in clips]):
             masks = [c.mask if (c.mask is not None) else
-                     ColorClip([1,1], col=1, ismask=True, duration=c.duration)
-                 #ColorClip(c.size, col=1, ismask=True).set_duration(c.duration)
+                     ColorClip([1,1], col=1, ismask=True, duracion=c.duracion)
+                 #ColorClip(c.size, col=1, ismask=True).set_duration(c.duracion)
                      for c in clips]
             result.mask = concatenate_videoclips(masks, method="chain", ismask=True)
             result.clips = clips
 
 
     elif method == "compose":
-        result = CompositeVideoClip( [c.set_start(t).set_pos('center')
+        result = CompositeVideoClip( [c.set_inicia(t).set_pos('center')
                                 for (c, t) in zip(clips, tt)],
                size = (w, h), bg_color=bg_color, ismask=ismask)
 
     result.tt = tt
     
-    result.start_times = tt[:-1]
-    result.start, result.duration, result.end = 0, tt[-1] , tt[-1]
+    result.inicia_times = tt[:-1]
+    result.inicia, result.duracion, result.fin = 0, tt[-1] , tt[-1]
     
     audio_t = [(c.audio,t) for c,t in zip(clips,tt) if c.audio is not None]
     if len(audio_t)>0:
-        result.audio = CompositeAudioClip([a.set_start(t)
+        result.audio = CompositeAudioClip([a.set_inicia(t)
                                 for a,t in audio_t])
 
     fps_list = list(set([c.fps for c in clips if hasattr(c,'fps')]))

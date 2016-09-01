@@ -63,7 +63,7 @@ print ('Analyzed the video, found a period of %.02f seconds'%video_period)
 
 edited_right = (clip.subclip(0,video_period)
                 .speedx(final_duration=2*audio_period)
-                .fx(vfx.loop, duration=audio.duration)
+                .fx(vfx.loop, duracion=audio.duracion)
                 .subclip(.25))
 
 edited_left = edited_right.fx(vfx.mirror_x)

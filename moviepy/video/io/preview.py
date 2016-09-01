@@ -107,7 +107,7 @@ def preview(clip, fps=15, audio=True, audio_fps=22050,
         audiothread = threading.Thread(target=clip.audio.preview,
             args = (audio_fps,audio_buffersize, audio_nbytes,
                     audioFlag, videoFlag))
-        audiothread.start()
+        audiothread.inicia()
     
     img = clip.get_frame(0)
     imdisplay(img, screen)
@@ -118,7 +118,7 @@ def preview(clip, fps=15, audio=True, audio_fps=22050,
     result = []
     
     t0 = time.time()
-    for t in np.arange(1.0 / fps, clip.duration-.001, 1.0 / fps):
+    for t in np.arange(1.0 / fps, clip.duracion-.001, 1.0 / fps):
         
         img = clip.get_frame(t)
         

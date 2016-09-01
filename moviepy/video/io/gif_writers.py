@@ -37,7 +37,7 @@ def write_gif_with_tempfiles(clip, filename, fps=None, program= 'ImageMagick',
     """
 
     fileName, fileExtension = os.path.splitext(filename)
-    tt = np.arange(0,clip.duration, 1.0/fps)
+    tt = np.arange(0,clip.duracion, 1.0/fps)
 
     tempfiles = []
 
@@ -46,7 +46,7 @@ def write_gif_with_tempfiles(clip, filename, fps=None, program= 'ImageMagick',
 
     verbose_print(verbose, "[MoviePy] Generating GIF frames...\n")
 
-    total = int(clip.duration*fps)+1
+    total = int(clip.duracion*fps)+1
     for i, t in tqdm(enumerate(tt), total=total):
 
         name = "%s_GIFTEMP%04d.png"%(fileName, i+1)
@@ -281,7 +281,7 @@ def write_gif_with_image_io(clip, filename, fps=None, opt='wu', loop=0,
         fps = clip.fps
 
     quantizer = 'wu' if opt!= 'nq' else 'nq' 
-    writer = imageio.save(filename, duration=1.0/fps,
+    writer = imageio.save(filename, duracion=1.0/fps,
                           quantizer=quantizer, palettesize=colors)
 
     verbose_print(verbose, "\n[MoviePy] Building file %s with imageio\n"%filename)

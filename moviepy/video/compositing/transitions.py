@@ -10,29 +10,29 @@ from moviepy.video.fx.fadein import fadein
 from moviepy.video.fx.fadeout import fadeout
 
 @add_mask_if_none
-def crossfadein(clip, duration):
-    """ Makes the clip appear progressively, over ``duration`` seconds.
+def crossfadein(clip, duracion):
+    """ Makes the clip appear progressively, over ``duracion`` seconds.
     Only works when the clip is included in a CompositeVideoClip.
     """
     newclip = clip.copy()
-    newclip.mask = clip.mask.fx(fadein, duration)
+    newclip.mask = clip.mask.fx(fadein, duracion)
     return newclip
 
 
 @requires_duration
 @add_mask_if_none
-def crossfadeout(clip, duration):
-    """ Makes the clip disappear progressively, over ``duration`` seconds.
+def crossfadeout(clip, duracion):
+    """ Makes the clip disappear progressively, over ``duracion`` seconds.
     Only works when the clip is included in a CompositeVideoClip.
     """
     newclip = clip.copy()
-    newclip.mask = clip.mask.fx(fadeout, duration)
+    newclip.mask = clip.mask.fx(fadeout, duracion)
     return newclip
 
 
 
 
-def slide_in(clip, duration, side):
+def slide_in(clip, duracion, side):
     """ Makes the clip arrive from one side of the screen.
 
     Only works when the clip is included in a CompositeVideoClip,
@@ -44,7 +44,7 @@ def slide_in(clip, duration, side):
     clip
       A video clip.
 
-    duration
+    duracion
       Time taken for the clip to be fully visible
 
     side
@@ -62,17 +62,17 @@ def slide_in(clip, duration, side):
 
     """
     w,h = clip.size
-    pos_dict = {'left' : lambda t: (min(0,w*(t/duration-1)),'center'),
-                'right' : lambda t: (max(0,w*(1-t/duration)),'center'),
-                'top' : lambda t: ('center',min(0,h*(t/duration-1))),
-                'bottom': lambda t: ('center',max(0,h*(1-t/duration)))}
+    pos_dict = {'left' : lambda t: (min(0,w*(t/duracion-1)),'center'),
+                'right' : lambda t: (max(0,w*(1-t/duracion)),'center'),
+                'top' : lambda t: ('center',min(0,h*(t/duracion-1))),
+                'bottom': lambda t: ('center',max(0,h*(1-t/duracion)))}
     
     return clip.set_pos( pos_dict[side] )
 
 
 
 @requires_duration
-def slide_out(clip, duration, side):
+def slide_out(clip, duracion, side):
     """ Makes the clip go away by one side of the screen.
 
     Only works when the clip is included in a CompositeVideoClip,
@@ -84,7 +84,7 @@ def slide_out(clip, duration, side):
     clip
       A video clip.
 
-    duration
+    duracion
       Time taken for the clip to fully disappear.
 
     side
@@ -103,11 +103,11 @@ def slide_out(clip, duration, side):
     """
 
     w,h = clip.size
-    t_s = clip.duration - duration # start time of the effect.
-    pos_dict = {'left' : lambda t: (min(0,w*(1-(t-ts)/duration)),'center'),
-                'right' : lambda t: (max(0,w*((t-ts)/duration-1)),'center'),
-                'top' : lambda t: ('center',min(0,h*(1-(t-ts)/duration))),
-                'bottom': lambda t: ('center',max(0,h*((t-ts)/duration-1))) }
+    t_s = clip.duracion - duracion # inicia time of the effect.
+    pos_dict = {'left' : lambda t: (min(0,w*(1-(t-ts)/duracion)),'center'),
+                'right' : lambda t: (max(0,w*((t-ts)/duracion-1)),'center'),
+                'top' : lambda t: ('center',min(0,h*(1-(t-ts)/duracion))),
+                'bottom': lambda t: ('center',max(0,h*((t-ts)/duracion-1))) }
     
     return clip.set_pos( pos_dict[side] )
 
@@ -122,11 +122,11 @@ def slide_out(clip, duration, side):
 
 @requires_duration
 def make_loopable(clip, cross_duration):
-    """ Makes the clip fade in progressively at its own end, this way
-    it can be looped indefinitely. ``cross`` is the duration in seconds
+    """ Makes the clip fade in progressively at its own fin, this way
+    it can be looped indefinitely. ``cross`` is the duracion in seconds
     of the fade-in.  """  
-    d = clip.duration
+    d = clip.duracion
     clip2 = clip.fx(crossfadein, cross_duration).\
-                 set_start(d - cross_duration)
+                 set_inicia(d - cross_duration)
     return CompositeVideoClip([ clip, clip2 ]).\
                  subclip(cross_duration,d)

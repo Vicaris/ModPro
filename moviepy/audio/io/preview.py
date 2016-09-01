@@ -43,7 +43,7 @@ def preview(clip, fps=22050,  buffersize=4000, nbytes= 2,
     pg.mixer.quit()
     
     pg.mixer.init(fps, -8 * nbytes, clip.nchannels, 1024)
-    totalsize = int(fps*clip.duration)
+    totalsize = int(fps*clip.duracion)
     pospos = np.array(list(range(0, totalsize,  buffersize))+[totalsize])
     tt = (1.0/fps)*np.arange(pospos[0],pospos[1])
     sndarray = clip.to_soundarray(tt,nbytes=nbytes, quantize=True)

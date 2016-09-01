@@ -162,7 +162,7 @@ def ffmpeg_audiowrite(clip, filename, fps, nbytes, buffersize,
         writer.write_frames(chunk)
 
     """
-    totalsize = int(fps*clip.duration)
+    totalsize = int(fps*clip.duracion)
 
     if (totalsize % buffersize == 0):
         nchunks = totalsize // buffersize

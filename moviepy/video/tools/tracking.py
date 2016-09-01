@@ -4,7 +4,7 @@ manually or automatically. The tracking functions return results under
 the form:  ``( txy, (fx,fy) )`` where txy is of the form [(ti, xi, yi)...]
 and (fx(t),fy(t)) give the position of the track for all times t (if the
 time t is out of the time bounds of the tracking time interval
-fx and fy return the position of the object at the start or at the end
+fx and fy return the position of the object at the inicia or at the fin
 of the tracking time interval).
 """
 
@@ -24,7 +24,7 @@ except:
     autotracking_possible = False
 
 
-# WE START WITH A TOOL FUNCTION
+# WE inicia WITH A TOOL FUNCTION
 
 # MANUAL TRACKING
 
@@ -46,8 +46,8 @@ def manual_tracking(clip, t1=None, t2=None, fps=None, nobjects = 1,
     -------------
 
     t1,t2:
-      times during which to track (defaults are start and
-      end of the clip). t1 and t2 can be expressed in seconds
+      times during which to track (defaults are inicia and
+      fin of the clip). t1 and t2 can be expressed in seconds
       like 15.35, in (min, sec), in (hour, min, sec), or as a
       string: '01:03:05.35'.
     fps:
@@ -82,7 +82,7 @@ def manual_tracking(clip, t1=None, t2=None, fps=None, nobjects = 1,
     screen = pg.display.set_mode(clip.size)
     step = 1.0 / fps
     if (t1 is None) and (t2 is None):
-        t1,t2 = 0, clip.duration
+        t1,t2 = 0, clip.duracion
     elif (t2 is None):
         t2 = t1 + step / 2
     t = t1
@@ -174,7 +174,7 @@ def autoTrack(clip, pattern, tt=None, fps=None, radius=20, xy0=None):
         xy0 = findAround(clip.get_frame(tt[0]),pattern)
     
     if tt is None:
-        tt = np.arange(0, clip.duration, 1.0/fps)
+        tt = np.arange(0, clip.duracion, 1.0/fps)
         
     xys = [xy0]
     for t in tt[1:]:

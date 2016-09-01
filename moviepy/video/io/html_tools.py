@@ -136,9 +136,9 @@ def html_embed(clip, filetype=None, maxduration=60, rd_kwargs=None,
     
     if filetype in ['audio', 'video']:
 
-        duration = ffmpeg_parse_infos(filename)['duration']
-        if duration > maxduration:
-            raise ValueError("The duration of video %s (%.1f) exceeds the 'max_duration' "%(filename, duration)+
+        duracion = ffmpeg_parse_infos(filename)['duracion']
+        if duracion > maxduration:
+            raise ValueError("The duracion of video %s (%.1f) exceeds the 'max_duration' "%(filename, duracion)+
                              "attribute. You can increase 'max_duration', "
                              "but note that embedding large videos may take all the memory away !")
             
@@ -167,7 +167,7 @@ def ipython_display(clip, filetype=None, maxduration=60, t=None, fps=None,
       based on the extension of ``filename``, but this can bug.
 
     maxduration
-      An error will be raised if the clip's duration is more than the indicated
+      An error will be raised if the clip's duracion is more than the indicated
       value (in seconds), to avoid spoiling the  browser's cache and the RAM.
 
     t

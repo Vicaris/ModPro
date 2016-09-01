@@ -55,8 +55,8 @@ class VideoFileClip(VideoClip):
         reader = FFMPEG_VideoReader(filename, pix_fmt=pix_fmt)
         self.reader = reader
         # Make some of the reader's attributes accessible from the clip
-        self.duration = self.reader.duration
-        self.end = self.reader.duration
+        self.duracion = self.reader.duracion
+        self.fin = self.reader.duracion
         
         self.fps = self.reader.fps
         self.size = self.reader.size
@@ -66,7 +66,7 @@ class VideoFileClip(VideoClip):
             self.make_frame = lambda t: reader.get_frame(t)[:,:,:3]
             mask_mf =  lambda t: reader.get_frame(t)[:,:,3]/255.0
             self.mask = (VideoClip(ismask = True, make_frame = mask_mf)
-                       .set_duration(self.duration))
+                       .set_duration(self.duracion))
             self.mask.fps = self.fps
 
         else:

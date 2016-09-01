@@ -26,8 +26,8 @@ class CompositeVideoClip(VideoClip):
           See ``VideoClip.set_pos``
       - The mask of the clip determines which parts are visible.
         
-      Finally, if all the clips in the list have their ``duration``
-      attribute set, then the duration of the composite video clip
+      Finally, if all the clips in the list have their ``duracion``
+      attribute set, then the duracion of the composite video clip
       is computed automatically
 
     bg_color
@@ -81,11 +81,11 @@ class CompositeVideoClip(VideoClip):
 
         
         
-        # compute duration
-        ends = [c.end for c in self.clips]
+        # compute duracion
+        ends = [c.fin for c in self.clips]
         if not any([(e is None) for e in ends]):
-            self.duration = max(ends)
-            self.end = max(ends)
+            self.duracion = max(ends)
+            self.fin = max(ends)
 
         # compute audio
         audioclips = [v.audio for v in self.clips if v.audio is not None]
@@ -158,7 +158,7 @@ def clips_array(array, rows_widths=None, cols_widths=None,
                 clip = (CompositeVideoClip([clip.set_pos('center')],
                                           size = (cw,rw),
                                           bg_color = bg_color).
-                                     set_duration(clip.duration))
+                                     set_duration(clip.duracion))
                 
             array[i,j] = clip.set_pos((x,y))
                  

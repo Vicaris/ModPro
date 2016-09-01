@@ -1,11 +1,11 @@
-.. _getting_started:
+.. _getting_iniciaed:
 
 
-Getting started with MoviePy
+Getting iniciaed with MoviePy
 ------------------------------
 
 
-These pages explain everything you need to start editing with MoviePy. To go further, have a look at the :ref:`gallery` and the :ref:`examples`.
+These pages explain everything you need to inicia editing with MoviePy. To go further, have a look at the :ref:`gallery` and the :ref:`examples`.
 
 
 .. toctree::

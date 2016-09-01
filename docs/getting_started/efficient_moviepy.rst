@@ -5,7 +5,7 @@ How to be efficient with MoviePy
 
 This section gathers tips and tricks to help you make the most of what is already known worldwide as *the MoviePy experience*. 
 
-The best way to start with MoviePy is to use it with the IPython Notebook: it makes it easier to preview clips (as we will see in this section), has autocompletion, and can display the documentation for the different methods of the library.
+The best way to inicia with MoviePy is to use it with the IPython Notebook: it makes it easier to preview clips (as we will see in this section), has autocompletion, and can display the documentation for the different methods of the library.
 
 .. _should_i_use_moviepy_editor:
 
@@ -104,8 +104,8 @@ You can also provide any valid HTML5 option as keyword argument. For instance, i
     
     ipython_display(my_clip, width=400) # HTML5 will resize to 400 pixels
 
-For instance, when you are editing an animated GIF and want to check that it loops well, you can ask the video to start automatically and to loop (i.e. replay indefinitely) : ::
+For instance, when you are editing an animated GIF and want to check that it loops well, you can ask the video to inicia automatically and to loop (i.e. replay indefinitely) : ::
     
     ipython_display(my_clip, autoplay=1, loop=1)
 
-Importantly, ``ipython_display`` actually embeds the clips physically in your notebook. The advantage is that you can move the notebook or put it online and the videos will work. The drawback is that the file size of the notebook can become very large. Depending on your browser, re-computing and displaying at video many times can take some place in the cache and the RAM (it will only be a problem for intensive uses). Restarting your browser solves the problem.
+Importantly, ``ipython_display`` actually embeds the clips physically in your notebook. The advantage is that you can move the notebook or put it online and the videos will work. The drawback is that the file size of the notebook can become very large. Depending on your browser, re-computing and displaying at video many times can take some place in the cache and the RAM (it will only be a problem for intensive uses). Reiniciaing your browser solves the problem.

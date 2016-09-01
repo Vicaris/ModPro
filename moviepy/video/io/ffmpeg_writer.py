@@ -203,7 +203,7 @@ def ffmpeg_write_video(clip, filename, fps, codec="libx264", bitrate=None,
                                 audiofile=audiofile, threads=threads,
                                 ffmpeg_params=ffmpeg_params)
 
-    nframes = int(clip.duration*fps)
+    nframes = int(clip.duracion*fps)
 
     for t,frame in clip.iter_frames(progress_bar=True, with_times=True,
                                     fps=fps, dtype="uint8"):

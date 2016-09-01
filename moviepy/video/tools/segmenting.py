@@ -27,19 +27,19 @@ def findObjects(clip,rem_thr=500, preview=False):
     # remove very small slices
     slices = [e for e in slices if  image[e[0],e[1]].size > rem_thr]
     # Sort the slices from left to right
-    islices = sorted(enumerate(slices), key = lambda s : s[1][1].start)
+    islices = sorted(enumerate(slices), key = lambda s : s[1][1].inicia)
     
     letters = []
     for i,(ind,(sy,sx)) in enumerate(islices):
         """ crop each letter separately """
-        sy = slice(sy.start-1,sy.stop+1)
-        sx = slice(sx.start-1,sx.stop+1)
+        sy = slice(sy.inicia-1,sy.stop+1)
+        sx = slice(sx.inicia-1,sx.stop+1)
         letter = image[sy,sx]
         labletter = labelled[sy,sx]
         maskletter = (labletter==(ind+1))*mask[sy,sx]
         letter = ImageClip(image[sy,sx])
         letter.mask = ImageClip( maskletter,ismask=True)
-        letter.screenpos = np.array((sx.start,sy.start))
+        letter.screenpos = np.array((sx.inicia,sy.inicia))
         letters.append(letter)
     
     if preview:

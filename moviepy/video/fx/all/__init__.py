@@ -15,7 +15,7 @@ _directory = os.path.dirname(
 
 _files = os.listdir(_directory)
 _fx_list = [_f for _f in _files if ( _f.endswith('.py') and
-	                            not _f.startswith('_'))]
+	                            not _f.iniciaswith('_'))]
 
 __all__ = [_c[:-3] for _c in _fx_list]
 

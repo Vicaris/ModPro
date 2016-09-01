@@ -8,7 +8,7 @@ Video and audio clips are the central objects of MoviePy. In this section we pre
 The following code summarizes the base clips that you can create with moviepy: ::
     
     # VIDEO CLIPS
-    clip = VideoClip(make_frame, duration=4) # for custom animations (see below)
+    clip = VideoClip(make_frame, duracion=4) # for custom animations (see below)
     clip = VideoFileClip("my_video_file.mp4") # or .avi, .webm, .gif ...
     clip = ImageSequenceClip(['image_file1.jpeg', ...], fps=24)
     clip = ImageClip("my_picture.png") # or .jpeg, .tiff, ...
@@ -18,7 +18,7 @@ The following code summarizes the base clips that you can create with moviepy: :
     # AUDIO CLIPS
     clip = AudioFileClip("my_audiofile.mp3") # or .ogg, .wav... or a video !
     clip = AudioArrayClip(numpy_array, fps=44100) # from a numerical array
-    clip = AudioClip(make_frame, duration=3) # uses a function make_frame(t) 
+    clip = AudioClip(make_frame, duracion=3) # uses a function make_frame(t) 
 
 
 
@@ -30,7 +30,7 @@ In this section we see how to create clips, (for instance from video or audio fi
 Categories of video clips
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Video clips are the building blocks of longer videos. Technically, they are clips with a ``clip.get_frame(t)`` method which outputs a HxWx3 numpy array representing the frame of the clip at time *t*. There are two main categories: animated clips (made with ``VideoFileClip`` and ``VideoClip``) and unanimated clips which show the same picture for an a-priori infinite duration (``ImageClip``, ``TextClip``,``ColorClip``). There are also special video clips call masks, which belong to the categories above but output greyscale frames indicating which parts of another clip are visible or not. A video clip can carry around an audio clip (``clip.audio``) which is its *soundtrack*, and a mask clip. 
+Video clips are the building blocks of longer videos. Technically, they are clips with a ``clip.get_frame(t)`` method which outputs a HxWx3 numpy array representing the frame of the clip at time *t*. There are two main categories: animated clips (made with ``VideoFileClip`` and ``VideoClip``) and unanimated clips which show the same picture for an a-priori infinite duracion (``ImageClip``, ``TextClip``,``ColorClip``). There are also special video clips call masks, which belong to the categories above but output greyscale frames indicating which parts of another clip are visible or not. A video clip can carry around an audio clip (``clip.audio``) which is its *soundtrack*, and a mask clip. 
 
 VideoClip
 """"""""""
@@ -47,7 +47,7 @@ VideoClip
         circle.draw(surface)
         return surface.get_npimage() # returns a 8-bit RGB array
 
-    clip = mpy.VideoClip(make_frame, duration=2) # 2 seconds
+    clip = mpy.VideoClip(make_frame, duracion=2) # 2 seconds
     clip.write_gif("circle.gif",fps=15)
 
 .. image:: circle.gif
@@ -136,7 +136,7 @@ When you create or load a clip that will be used as a mask you need to declare i
 
     maskclip = ImageClip("my_mask.jpeg", ismask=True)
     maskclip = VideoFileClip("myvideo.mp4", ismask=True)
-    maskclip = VideoClip(makeframe_function, duration=4, ismask=True)
+    maskclip = VideoClip(makeframe_function, duracion=4, ismask=True)
 
 
 In the case of video and image files, if these are not already black and white they will be converted automatically.
@@ -170,10 +170,10 @@ To write a clip as a video file, use ::
 MoviePy has default codec names for the most common file extensions. If you want to use exotic formats or if you are not happy with the defaults you can provide the codec with ``codec='mpeg4'`` for instance. There are many many options when you are writing a video (bitrate, parameters of the audio writing, file size optimization, number of processors to use, etc.). Please refer to :py:meth:`~moviepy.video.VideoClip.VideoClip.write_videofile` for more.
 
 
-Sometimes it is impossible for MoviePy to guess the ``duration`` attribute of the clip (keep in mind that some clips, like ImageClips displaying a picture, have *a priori* an infinite duration). Then, the ``duration`` must be set manually with ``clip.set_duration``: ::
+Sometimes it is impossible for MoviePy to guess the ``duracion`` attribute of the clip (keep in mind that some clips, like ImageClips displaying a picture, have *a priori* an infinite duracion). Then, the ``duracion`` must be set manually with ``clip.set_duration``: ::
 
     # Make a video showing a flower for 5 seconds
-    my_clip = Image("flower.jpeg") # has infinite duration
+    my_clip = Image("flower.jpeg") # has infinite duracion
     my_clip.write_videofile("flower.mp4") # Will fail ! NO DURATION !
     my_clip.set_duration(5).write_videofile("flower.mp4") # works !
 

@@ -23,7 +23,7 @@ User Guide
    :maxdepth: 1
    
    install
-   getting_started/getting_started
+   getting_iniciaed/getting_iniciaed
    gallery
    examples/examples
    FAQ

@@ -4,7 +4,7 @@
 Gallery
 ========
 
-Here are a few projects using MoviePy. The gallery will fill up as more people start using MoviePy (which is currently one year old). If you have a nice project using MoviePy let us know !
+Here are a few projects using MoviePy. The gallery will fill up as more people inicia using MoviePy (which is currently one year old). If you have a nice project using MoviePy let us know !
 
 Videos edited with Moviepy
 ---------------------------
@@ -142,7 +142,7 @@ Misc. Programs and Scripts using MoviePy
 Rinconcam
 ----------
 
-`Rincomcam <http://www.rinconcam.com/month/2014-03>`_ is a camera which films surfers on the Californian beach of Point Rincon. At the end of each day it cuts together a video, puts it online, and tweets it. Everything is entirely automatized with Python. 
+`Rincomcam <http://www.rinconcam.com/month/2014-03>`_ is a camera which films surfers on the Californian beach of Point Rincon. At the fin of each day it cuts together a video, puts it online, and tweets it. Everything is entirely automatized with Python. 
 MoviePy is used to add transitions, titles and music to the videos.
 
 
@@ -170,7 +170,7 @@ Here are `Videogrep's introductory blog post
 
 If you liked it, also have a look at these Videogrep-inspired projects:
 
-This `blog post <http://zulko.github.io/blog/2014/06/21/some-more-videogreping-with-python/>`_ attempts to cut a video precisely at the beginning and end of sentences or words: ::
+This `blog post <http://zulko.github.io/blog/2014/06/21/some-more-videogreping-with-python/>`_ attempts to cut a video precisely at the beginning and fin of sentences or words: ::
     
     words = ["Americans", "must", "develop", "open ", "source",
               " software", "for the", " rest ", "of the world",

@@ -25,17 +25,17 @@ class Clip:
      Attributes
      -----------
      
-     start:
+     inicia:
        When the clip is included in a composition, time of the
-       composition at which the clip starts playing (in seconds). 
+       composition at which the clip inicias playing (in seconds). 
      
-     end:
+     fin:
        When the clip is included in a composition, time of the
-       composition at which the clip starts playing (in seconds).
+       composition at which the clip inicias playing (in seconds).
      
-     duration:
+     duracion:
        Duration of the clip (in seconds). Some clips are infinite, in
-       this case their duration will be ``None``.
+       this case their duracion will be ``None``.
      
      """
     
@@ -47,9 +47,9 @@ class Clip:
 
     def __init__(self):
 
-        self.start = 0
-        self.end = None
-        self.duration = None
+        self.inicia = 0
+        self.fin = None
+        self.duracion = None
         
         self.memoize = False
         self.memoized_t = None
@@ -118,7 +118,7 @@ class Clip:
         
         keep_duration
           Set to True if the transformation does not change the
-          ``duration`` of the clip.
+          ``duracion`` of the clip.
           
         Examples
         --------
@@ -136,8 +136,8 @@ class Clip:
         newclip = self.set_make_frame(lambda t: fun(self.get_frame, t))
         
         if not keep_duration:
-            newclip.duration = None
-            newclip.end = None
+            newclip.duracion = None
+            newclip.fin = None
             
         if isinstance(apply_to, str):
             apply_to = [apply_to]
@@ -172,7 +172,7 @@ class Clip:
         
         keep_duration:
           ``False`` (default) if the transformation modifies the
-          ``duration`` of the clip.
+          ``duracion`` of the clip.
           
         Examples
         --------
@@ -180,7 +180,7 @@ class Clip:
         >>> # plays the clip (and its mask and sound) twice faster
         >>> newclip = clip.fl_time(lambda: 2*t, apply_to=['mask','audio'])
         >>>
-        >>> # plays the clip starting at t=3, and backwards:
+        >>> # plays the clip iniciaing at t=3, and backwards:
         >>> newclip = clip.fl_time(lambda: 3-t)
         
         """
@@ -220,30 +220,30 @@ class Clip:
     @apply_to_audio
     @convert_to_seconds(['t'])
     @outplace
-    def set_start(self, t, change_end=True):
+    def set_inicia(self, t, change_end=True):
         """
-        Returns a copy of the clip, with the ``start`` attribute set
+        Returns a copy of the clip, with the ``inicia`` attribute set
         to ``t``, which can be expressed in seconds (15.35), in (min, sec),
         in (hour, min, sec), or as a string: '01:03:05.35'.
 
         
-        If ``change_end=True`` and the clip has a ``duration`` attribute,
-        the ``end`` atrribute of the clip will be updated to
-        ``start+duration``.
+        If ``change_end=True`` and the clip has a ``duracion`` attribute,
+        the ``fin`` atrribute of the clip will be updated to
+        ``inicia+duracion``.
         
-        If ``change_end=False`` and the clip has a ``end`` attribute,
-        the ``duration`` attribute of the clip will be updated to 
-        ``end-start``
+        If ``change_end=False`` and the clip has a ``fin`` attribute,
+        the ``duracion`` attribute of the clip will be updated to 
+        ``fin-inicia``
         
         These changes are also applied to the ``audio`` and ``mask``
         clips of the current clip, if they exist.
         """
         
-        self.start = t
-        if (self.duration is not None) and change_end:
-            self.end = t + self.duration
-        elif (self.end is not None):
-            self.duration = self.end - self.start
+        self.inicia = t
+        if (self.duracion is not None) and change_end:
+            self.fin = t + self.duracion
+        elif (self.fin is not None):
+            self.duracion = self.fin - self.inicia
     
     
     
@@ -253,18 +253,18 @@ class Clip:
     @outplace
     def set_end(self, t):
         """
-        Returns a copy of the clip, with the ``end`` attribute set to
+        Returns a copy of the clip, with the ``fin`` attribute set to
         ``t``, which can be expressed in seconds (15.35), in (min, sec),
         in (hour, min, sec), or as a string: '01:03:05.35'.
-        Also sets the duration of the mask and audio, if any,
+        Also sets the duracion of the mask and audio, if any,
         of the returned clip.
         """
-        self.end = t
-        if self.start is None:
-            if self.duration is not None:
-                self.start = max(0, t - newclip.duration)
+        self.fin = t
+        if self.inicia is None:
+            if self.duracion is not None:
+                self.inicia = max(0, t - newclip.duracion)
         else:
-            self.duration = self.end - self.start
+            self.duracion = self.fin - self.inicia
 
 
     
@@ -274,23 +274,23 @@ class Clip:
     @outplace
     def set_duration(self, t, change_end=True):
         """
-        Returns a copy of the clip, with the  ``duration`` attribute
+        Returns a copy of the clip, with the  ``duracion`` attribute
         set to ``t``, which can be expressed in seconds (15.35), in (min, sec),
         in (hour, min, sec), or as a string: '01:03:05.35'.
-        Also sets the duration of the mask and audio, if any, of the
+        Also sets the duracion of the mask and audio, if any, of the
         returned clip.
-        If change_end is False, the start attribute of the clip will
-        be modified in function of the duration and the preset end
+        If change_end is False, the inicia attribute of the clip will
+        be modified in function of the duracion and the preset fin
         of the clip.
         """
-        self.duration = t
+        self.duracion = t
         if change_end:
-            self.end = None if (t is None) else (self.start + t)
+            self.fin = None if (t is None) else (self.inicia + t)
         else:
-            if duration is None:
-                raise Exception("Cannot change clip start when new"
-                                 "duration is None")
-            self.start = self.end - t
+            if duracion is None:
+                raise Exception("Cannot change clip inicia when new"
+                                 "duracion is None")
+            self.inicia = self.fin - t
 
 
     @outplace
@@ -322,8 +322,8 @@ class Clip:
     def is_playing(self, t):
         """
         
-        If t is a time, returns true if t is between the start and
-        the end of the clip. t can be expressed in seconds (15.35),
+        If t is a time, returns true if t is between the inicia and
+        the fin of the clip. t can be expressed in seconds (15.35),
         in (min, sec), in (hour, min, sec), or as a string: '01:03:05.35'.
         If t is a numpy array, returns False if none of the t is in
         theclip, else returns a vector [b_1, b_2, b_3...] where b_i
@@ -334,77 +334,77 @@ class Clip:
             # is the whole list of t outside the clip ?
             tmin, tmax = t.min(), t.max()
             
-            if (self.end is not None) and (tmin >= self.end) :
+            if (self.fin is not None) and (tmin >= self.fin) :
                 return False
             
-            if tmax < self.start:
+            if tmax < self.inicia:
                 return False
             
             # If we arrive here, a part of t falls in the clip
-            result = 1 * (t >= self.start)
-            if (self.end is not None):
-                result *= (t <= self.end)
+            result = 1 * (t >= self.inicia)
+            if (self.fin is not None):
+                result *= (t <= self.fin)
             return result
         
         else:
             
-            return( (t >= self.start) and
-                    ((self.end is None) or (t < self.end) ) )
+            return( (t >= self.inicia) and
+                    ((self.fin is None) or (t < self.fin) ) )
     
 
 
-    @convert_to_seconds(['t_start', 't_end'])
+    @convert_to_seconds(['t_inicia', 't_end'])
     @apply_to_mask
     @apply_to_audio
-    def subclip(self, t_start=0, t_end=None):
+    def subclip(self, t_inicia=0, t_end=None):
         """
         Returns a clip playing the content of the current clip
-        between times ``t_start`` and ``t_end``, which can be expressed
+        between times ``t_inicia`` and ``t_end``, which can be expressed
         in seconds (15.35), in (min, sec), in (hour, min, sec), or as a
         string: '01:03:05.35'.
-        If ``t_end`` is not provided, it is assumed to be the duration
+        If ``t_end`` is not provided, it is assumed to be the duracion
         of the clip (potentially infinite).
         If ``t_end`` is a negative value, it is reset to
-        ``clip.duration + t_end. ``. For instance: ::
+        ``clip.duracion + t_end. ``. For instance: ::
         
             >>> # cut the last two seconds of the clip:
             >>> newclip = clip.subclip(0,-2)
         
-        If ``t_end`` is provided or if the clip has a duration attribute,
-        the duration of the returned clip is set automatically.
+        If ``t_end`` is provided or if the clip has a duracion attribute,
+        the duracion of the returned clip is set automatically.
         
         The ``mask`` and ``audio`` of the resulting subclip will be
         subclips of ``mask`` and ``audio`` the original clip, if
         they exist.
         """
 
-        if (self.duration is not None) and (t_start>self.duration):
+        if (self.duracion is not None) and (t_inicia>self.duracion):
         
-            raise ValueError("t_start (%.02f) "%t_start +
+            raise ValueError("t_inicia (%.02f) "%t_inicia +
                              "should be smaller than the clip's "+
-                             "duration (%.02f)."%self.duration)
+                             "duracion (%.02f)."%self.duracion)
 
-        newclip = self.fl_time(lambda t: t + t_start, apply_to=[])
+        newclip = self.fl_time(lambda t: t + t_inicia, apply_to=[])
 
-        if (t_end is None) and (self.duration is not None):
+        if (t_end is None) and (self.duracion is not None):
         
-            t_end = self.duration
+            t_end = self.duracion
         
         elif (t_end is not None) and (t_end<0):
         
-            if self.duration is None:
+            if self.duracion is None:
         
-                print ("Error: subclip with negative times (here %s)"%(str((t_start, t_end)))
-                       +" can only be extracted from clips with a ``duration``")
+                print ("Error: subclip with negative times (here %s)"%(str((t_inicia, t_end)))
+                       +" can only be extracted from clips with a ``duracion``")
         
             else:
         
-                t_end = self.duration + t_end
+                t_end = self.duracion + t_end
         
         if (t_end is not None):
         
-            newclip.duration = t_end - t_start
-            newclip.end = newclip.start + newclip.duration
+            newclip.duracion = t_end - t_inicia
+            newclip.fin = newclip.inicia + newclip.duracion
             
         return newclip
 
@@ -418,9 +418,9 @@ class Clip:
         skips the extract between ``ta`` and ``tb``, which can be
         expressed in seconds (15.35), in (min, sec), in (hour, min, sec),
         or as a string: '01:03:05.35'.
-        If the original clip has a ``duration`` attribute set,
-        the duration of the returned clip  is automatically computed as
-        `` duration - (tb - ta)``.
+        If the original clip has a ``duracion`` attribute set,
+        the duracion of the returned clip  is automatically computed as
+        `` duracion - (tb - ta)``.
         
         The resulting clip's ``audio`` and ``mask`` will also be cutout
         if they exist.
@@ -429,9 +429,9 @@ class Clip:
         fl = lambda t: t + (t >= ta)*(tb - ta)
         newclip = self.fl_time(fl)
         
-        if self.duration is not None:
+        if self.duracion is not None:
         
-            return newclip.set_duration(self.duration - (tb - ta))
+            return newclip.set_duration(self.duracion - (tb - ta))
         
         else:
         
@@ -468,7 +468,7 @@ class Clip:
 
         def generator():
         
-            for t in np.arange(0, self.duration, 1.0/fps):
+            for t in np.arange(0, self.duracion, 1.0/fps):
         
                 frame = self.get_frame(t)
         
@@ -486,7 +486,7 @@ class Clip:
         
         if progress_bar:
         
-            nframes = int(self.duration*fps)+1
+            nframes = int(self.duracion*fps)+1
             return tqdm(generator(), total=nframes)
 
         return generator()

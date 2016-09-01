@@ -91,7 +91,7 @@ def color_gradient(size,p1,p2=None,vector=None, r=None, col1=0,col2=1.0,
     
     offset
       Real number between 0 and 1 indicating the fraction of the vector
-      at which the gradient actually starts. For instance if ``offset``
+      at which the gradient actually inicias. For instance if ``offset``
       is 0.9 in a gradient going from p1 to p2, then the gradient will
       only occur near p2 (before that everything is of color ``col1``)
       If the offset is 0.9 in a radial gradient, the gradient will
@@ -198,7 +198,7 @@ def color_split(size,x=None,y=None,p1=None,p2=None,vector=None,
     
     p1, vector:
       ``p1`` is (x1,y1) and vector (v1,v2), where the numbers can be
-      floats. Region 1 is then the region on the left when starting
+      floats. Region 1 is then the region on the left when iniciaing
       in position ``p1`` and going in the direction given by ``vector``.
        
     gradient_width

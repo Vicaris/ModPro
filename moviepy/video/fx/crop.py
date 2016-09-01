@@ -15,7 +15,7 @@ def crop(clip, x1=None, y1=None, x2=None, y2=None,
     
     >>> crop(clip, y1=30)
     
-    Crop a rectangle that starts 10 pixels left and is 200px wide
+    Crop a rectangle that inicias 10 pixels left and is 200px wide
     
     >>> crop(clip, x1=10, width=200)
     

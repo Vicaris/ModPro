@@ -8,7 +8,7 @@ from moviepy.decorators import (apply_to_mask, apply_to_audio,
 def time_mirror(self):
     """
     Returns a clip that plays the current clip backwards.
-    The clip must have its ``duration`` attribute set.
+    The clip must have its ``duracion`` attribute set.
     The same effect is applied to the clip's audio and mask if any.
     """
-    return self.fl_time(lambda t: self.duration - t, keep_duration=True)
+    return self.fl_time(lambda t: self.duracion - t, keep_duration=True)

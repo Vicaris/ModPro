@@ -1,7 +1,7 @@
 """
 Description of the video:
 Mimic of Star Wars' opening title. A text with a (false)
-perspective effect goes towards the end of space, on a
+perspective effect goes towards the fin of space, on a
 background made of stars. Slight fading effect on the text.
 
 """
@@ -132,7 +132,7 @@ def annotate(clip,txt,txt_color='white',bg_color=(0,0,255)):
                         
     cvc =  CompositeVideoClip([clip , txtclip.set_pos((0,'bottom'))])
     
-    return cvc.set_duration(clip.duration)
+    return cvc.set_duration(clip.duracion)
 
 
 def resizeCenter(clip):
