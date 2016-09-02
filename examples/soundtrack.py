@@ -5,7 +5,7 @@ from moviepy.editor import *
 # We load a movie and replace the sound with some music:
 
 movie = VideoFileClip("../../videos/dam.mov").\
-        set_audio( AudioFileClip("../../sounds/iniciaars.ogg") )
+        set_audio( AudioFileClip("../../sounds/startars.ogg") )
 
 
 # If the soundtrack is longer than the movie, then at the fin of the clip

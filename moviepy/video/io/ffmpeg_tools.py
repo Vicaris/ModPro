@@ -59,8 +59,8 @@ def ffmpeg_extract_audio(inputfile,output,bitrate=3000,fps=44100):
     subprocess_call(cmd)
     
 
-def ffmpeg_resize(video,output,size):
-    """ resizes ``video`` to new size ``size`` and write the result
+def ffmpeg_resize(video,output,tamano):
+    """ resizes ``video`` to new tamano ``tamano`` and write the result
         in file ``output``. """
     cmd= [get_setting("FFMPEG_BINARY"), "-i", video, "-vf", "scale=%d:%d"%(res[0], res[1]),
              output]

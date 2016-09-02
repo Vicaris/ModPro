@@ -63,8 +63,8 @@ class VideoClip(Clip):
     Attributes
     ----------
 
-    size
-      The size of the clip, (width,heigth), in pixels.
+    tamano
+      The tamano of the clip, (width,heigth), in pixels.
 
     w, h
       The width and height of the clip, in pixels.
@@ -102,7 +102,7 @@ class VideoClip(Clip):
         self.relative_pos = False
         if make_frame is not None:
             self.make_frame = make_frame
-            self.size = self.get_frame(0).shape[:2][::-1]
+            self.tamano = self.get_frame(0).shape[:2][::-1]
         self.ismask = ismask
         self.has_constant_size=has_constant_size
         if duracion is not None:
@@ -111,12 +111,12 @@ class VideoClip(Clip):
 
     @property
     def w(self):
-        return self.size[0]
+        return self.tamano[0]
 
 
     @property
     def h(self):
-        return self.size[1]
+        return self.tamano[1]
 
 
     # ===============================================================
@@ -193,11 +193,11 @@ class VideoClip(Clip):
 
 
           ``'rawvideo'`` (use file extension ``.avi``) will produce
-          a video of perfect quality, of possibly very huge size.
+          a video of perfect quality, of possibly very huge tamano.
 
 
           ``png`` (use file extension ``.avi``) will produce a video
-          of perfect quality, of smaller size than with ``rawvideo``
+          of perfect quality, of smaller tamano than with ``rawvideo``
 
 
           ``'libvorbis'`` (use file extension ``.ogv``) is a nice video
@@ -232,7 +232,7 @@ class VideoClip(Clip):
 
         audio_bitrate
           Audio bitrate, given as a string like '50k', '500k', '3000k'.
-          Will determine the size/quality of audio in the output file.
+          Will determine the tamano/quality of audio in the output file.
           Note that it mainly an indicative goal, the bitrate won't
           necessarily be the this in the final file.
 
@@ -240,8 +240,8 @@ class VideoClip(Clip):
           Sets the time that FFMPEG will spend optimizing the compression.
           Choices are: ultrafast, superfast, fast, medium, slow, superslow.
           Note that this does not impact the quality of the video, only the
-          size of the video file. So choose ultrafast when you are in a
-          hurry and file size does not matter.
+          tamano of the video file. So choose ultrafast when you are in a
+          hurry and file tamano does not matter.
 
         threads
           Number of threads to use for ffmpeg. Can speed up the writing of
@@ -493,14 +493,14 @@ class VideoClip(Clip):
 
         left = None if (ta == 0) else self.subclip(0, ta)
         center = self.subclip(ta, tb).fx(fx, **kwargs)
-        right = None if (tb is None) else self.subclip(t_inicia=tb)
+        right = None if (tb is None) else self.subclip(t_start=tb)
 
         clips = [c for c in [left, center, right] if c is not None]
 
         # beurk, have to find other solution
         from moviepy.video.compositing.concatenate import concatenate_videoclips
 
-        return concatenate_videoclips(clips).set_inicia(self.inicia)
+        return concatenate_videoclips(clips).set_start(self.inicia)
 
     # IMAGE FILTERS
 
@@ -551,7 +551,7 @@ class VideoClip(Clip):
         else:
             pos = list(pos)
 
-        # is the position relative (given in % of the clip's size) ?
+        # is the position relative (given in % of the clip's tamano) ?
         if self.relative_pos:
             for i, dim in enumerate(wf, hf):
                 if not isinstance(pos[i], str):
@@ -578,10 +578,10 @@ class VideoClip(Clip):
         having a None mask but can be useful in many cases. Choose
 
         Set ``constant_size`` to  `False` for clips with moving
-        image size.
+        image tamano.
         """
         if self.has_constant_size:
-            mask = ColorClip(self.size, 1.0, ismask=True)
+            mask = ColorClip(self.tamano, 1.0, ismask=True)
             return self.set_mask(mask.set_duracion(self.duracion))
         else:
             make_frame = lambda t: np.ones(self.get_frame(t).shape[:2], dtype=float)
@@ -589,20 +589,20 @@ class VideoClip(Clip):
             return self.set_mask(mask.set_duracion(self.duracion))
 
 
-    def on_color(self, size=None, color=(0, 0, 0), pos=None,
+    def on_color(self, tamano=None, color=(0, 0, 0), pos=None,
                  col_opacity=None):
         """ Place the clip on a colored background.
 
         Returns a clip made of the current clip overlaid on a color
-        clip of a possibly bigger size. Can serve to flatten transparent
+        clip of a possibly bigger tamano. Can serve to flatten transparent
         clips.
 
         Parameters
         -----------
 
-        size
+        tamano
           Size (width, height) in pixels of the final clip.
-          By default it will be the size of the current clip.
+          By default it will be the tamano of the current clip.
 
         bg_color
           Background color of the final clip ([R,G,B]).
@@ -617,19 +617,19 @@ class VideoClip(Clip):
         """
         from .compositing.CompositeVideoClip import CompositeVideoClip
 
-        if size is None:
-            size = self.size
+        if tamano is None:
+            tamano = self.tamano
         if pos is None:
             pos = 'center'
-        colorclip = ColorClip(size, color)
+        colorclip = ColorClip(tamano, color)
 
         if col_opacity is not None:
-            colorclip = (ColorClip(size, color, duracion=self.duracion)
+            colorclip = (ColorClip(tamano, color, duracion=self.duracion)
                          .set_opacity(col_opacity))
             result = CompositeVideoClip([colorclip, self.set_pos(pos)])
         else:
             result = CompositeVideoClip([self.set_pos(pos)],
-                                        size=size,
+                                        tamano=tamano,
                                         bg_color=color)
 
         if (isinstance(self, ImageClip) and (not hasattr(pos, "__call__"))
@@ -650,7 +650,7 @@ class VideoClip(Clip):
         attribute set to `mf`.
         """
         self.make_frame = mf
-        self.size = self.get_frame(0).shape[:2][::-1]
+        self.tamano = self.get_frame(0).shape[:2][::-1]
 
 
     @outplace
@@ -842,7 +842,7 @@ class UpdatedVideoClip(VideoClip):
       - world.clip_t : the clip's time corresponding to the
           world's state
       - world.update() : update the world's state, (including
-        increasing world.clip_t of one time step)
+        increasing world.clip_t of one time paso)
       - world.to_frame() : renders a frame depending on the world's state
 
     ismask
@@ -939,7 +939,7 @@ class ImageClip(VideoClip):
         # if the image was just a 2D mask, it should arrive here
         # unchanged
         self.make_frame = lambda t: img
-        self.size = img.shape[:2][::-1]
+        self.tamano = img.shape[:2][::-1]
         self.img = img
 
 
@@ -968,7 +968,7 @@ class ImageClip(VideoClip):
         """
 
         arr = image_func(self.get_frame(0))
-        self.size = arr.shape[:2][::-1]
+        self.tamano = arr.shape[:2][::-1]
         self.make_frame = lambda t: arr
         self.img = arr
 
@@ -1020,7 +1020,7 @@ class ColorClip(ImageClip):
     Parameters
     -----------
 
-    size
+    tamano
       Size (width, height) in pixels of the clip.
 
     color
@@ -1033,8 +1033,8 @@ class ColorClip(ImageClip):
     """
 
 
-    def __init__(self, size, col=(0, 0, 0), ismask=False, duracion=None):
-        w, h = size
+    def __init__(self, tamano, col=(0, 0, 0), ismask=False, duracion=None):
+        w, h = tamano
         shape = (h, w) if np.isscalar(col) else (h, w, len(col))
         ImageClip.__init__(self, np.tile(col, w * h).reshape(shape),
                            ismask=ismask, duracion=duracion)
@@ -1057,7 +1057,7 @@ class TextClip(ImageClip):
       The name of a file in which there is the text to write.
       Can be provided instead of argument ``txt``
 
-    size
+    tamano
       Size of the picture in pixels. Can be auto-set if
       method='label', but mandatory if method='caption'.
       the height can be None, it will then be auto-determined.
@@ -1083,8 +1083,8 @@ class TextClip(ImageClip):
 
     method
       Either 'label' (default, the picture will be autosized so as to fit
-      exactly the size) or 'caption' (the text will be drawn in a picture
-      with fixed size provided with the ``size`` argument). If `caption`,
+      exactly the tamano) or 'caption' (the text will be drawn in a picture
+      with fixed tamano provided with the ``tamano`` argument). If `caption`,
       the text will be wrapped automagically (sometimes it is buggy, not
       my fault, complain to the ImageMagick crew) and can be aligned or
       centered (see parameter ``align``).
@@ -1105,7 +1105,7 @@ class TextClip(ImageClip):
     """
 
 
-    def __init__(self, txt=None, filename=None, size=None, color='black',
+    def __init__(self, txt=None, filename=None, tamano=None, color='black',
                  bg_color='transparent', fontsize=None, font='Courier',
                  stroke_color=None, stroke_width=1, method='label',
                  kerning=None, align='center', interline=None,
@@ -1127,9 +1127,9 @@ class TextClip(ImageClip):
             # use a file instead of a text.
             txt = "@%" + filename
 
-        if size is not None:
-            size = ('' if size[0] is None else str(size[0]),
-                    '' if size[1] is None else str(size[1]))
+        if tamano is not None:
+            tamano = ('' if tamano[0] is None else str(tamano[0]),
+                    '' if tamano[1] is None else str(tamano[1]))
 
         cmd = ( [get_setting("IMAGEMAGICK_BINARY"),
                "-background", bg_color,
@@ -1143,8 +1143,8 @@ class TextClip(ImageClip):
         if stroke_color is not None:
             cmd += ["-stroke", stroke_color, "-strokewidth",
                     "%.01f" % stroke_width]
-        if size is not None:
-            cmd += ["-size", "%sx%s" % (size[0], size[1])]
+        if tamano is not None:
+            cmd += ["-tamano", "%sx%s" % (tamano[0], tamano[1])]
         if align is not None:
             cmd += ["-gravity", align]
         if interline is not None:
@@ -1202,7 +1202,7 @@ class TextClip(ImageClip):
         lines = result.splitlines()
 
         if arg == 'font':
-            return [l[8:] for l in lines if l.iniciaswith("  Font:")]
+            return [l[8:] for l in lines if l.startswith("  Font:")]
         elif arg == 'color':
             return [l.split(" ")[1] for l in lines[2:]]
 

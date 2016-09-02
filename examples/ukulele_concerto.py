@@ -7,14 +7,14 @@ ukulele = VideoFileClip("../../videos/moi_ukulele.MOV", audio=False).\
                subclip(60+33, 60+50).\
                crop(486, 180, 1196, 570)
 
-w,h = moviesize = ukulele.size
+w,h = moviesize = ukulele.tamano
 
 # THE PIANO FOOTAGE IS DOWNSIZED, HAS A WHITE MARGIN, IS
 # IN THE BOTTOM RIGHT CORNER 
 
 piano = (VideoFileClip("../../videos/douceamb.mp4",audio=False).
          subclip(30,50).
-         resize((w/3,h/3)).    # one third of the total screen
+         resize((w/3,h/3)).    # one third of the total pantalla
          margin( 6,color=(255,255,255)).  #white margin
          margin( bottom=20, right=20, opacity=0). # transparent
          set_pos(('right','bottom')) )
@@ -26,7 +26,7 @@ piano = (VideoFileClip("../../videos/douceamb.mp4",audio=False).
 txt = TextClip("V. Zulkoninov - Ukulele Sonata", font='Amiri-regular',
 	               color='white',fontsize=24)
 
-txt_col = txt.on_color(size=(ukulele.w + txt.w,txt.h-10),
+txt_col = txt.on_color(tamano=(ukulele.w + txt.w,txt.h-10),
                   color=(0,0,0), pos=(6,'center'), col_opacity=0.6)
 
 

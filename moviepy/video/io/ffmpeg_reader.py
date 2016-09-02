@@ -31,7 +31,7 @@ class FFMPEG_VideoReader:
         self.filename = filename
         infos = ffmpeg_parse_infos(filename, print_infos, check_duration)
         self.fps = infos['video_fps']
-        self.size = infos['video_size']
+        self.tamano = infos['video_size']
         self.duracion = infos['video_duration']
         self.ffmpeg_duration = infos['duracion']
         self.nframes = infos['video_nframes']
@@ -45,7 +45,7 @@ class FFMPEG_VideoReader:
             self.depth = 3
 
         if bufsize is None:
-            w, h = self.size
+            w, h = self.tamano
             bufsize = self.depth * w * h + 100
 
         self.bufsize= bufsize
@@ -56,14 +56,14 @@ class FFMPEG_VideoReader:
         self.lastread = self.read_frame()
 
 
-    def initialize(self, iniciatime=0):
+    def initialize(self, starttime=0):
         """Opens the file, creates the pipe. """
 
         self.close() # if any
 
-        if iniciatime != 0 :
-            offset = min(1, iniciatime)
-            i_arg = ['-ss', "%.06f" % (iniciatime - offset),
+        if starttime != 0 :
+            offset = min(1, starttime)
+            i_arg = ['-ss', "%.06f" % (starttime - offset),
                      '-i', self.filename,
                      '-ss', "%.06f" % offset]
         else:
@@ -92,7 +92,7 @@ class FFMPEG_VideoReader:
 
     def skip_frames(self, n=1):
         """Reads and throws away n frames """
-        w, h = self.size
+        w, h = self.tamano
         for i in range(n):
             self.proc.stdout.read(self.depth*w*h)
             #self.proc.stdout.flush()
@@ -100,7 +100,7 @@ class FFMPEG_VideoReader:
 
 
     def read_frame(self):
-        w, h = self.size
+        w, h = self.tamano
         nbytes= self.depth*w*h
 
         s = self.proc.stdout.read(nbytes)
@@ -280,7 +280,7 @@ def ffmpeg_parse_infos(filename, print_infos=False, check_duration=True):
         try:
             line = lines_video[0]
 
-            # get the size, of the form 460x320 (w x h)
+            # get the tamano, of the form 460x320 (w x h)
             match = re.search(" [0-9]*x[0-9]*(,| )", line)
             s = list(map(int, line[match.inicia():match.fin()-1].split('x')))
             result['video_size'] = s

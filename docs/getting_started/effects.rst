@@ -7,24 +7,24 @@ Clips transformations and effects
 
 There are several categories of clip modifications in MoviePy:
 
-- The very common methods to change the attributes of a clip: ``clip.set_duracion``, ``clip.set_audio``, ``clip.set_mask``, ``clip.set_inicia`` etc.
+- The very common methods to change the attributes of a clip: ``clip.set_duracion``, ``clip.set_audio``, ``clip.set_mask``, ``clip.set_start`` etc.
 - The already-implemented effects. Core effects like ``clip.subclip(t1, t2)`` (keep only the cut between t1 and t2), which are very important, are implemented as class methods. More advanced and less common effects like ``loop`` (makes the clip play in a loop) or ``time_mirror`` (makes the clip play backwards) are placed in the special modules ``moviepy.video.fx`` and ``moviepy.audio.fx`` and are applied with the ``clip.fx`` method, for instance ``clip.fx(time_mirror)`` (makes the clip play backwards), ``clip.fx(black_white)`` (turns the clip black and white), etc.
 - The effects that you can create yourself. using 
 
 All these effects have in common that they are **not inplace**: they do NOT modify the original clip, instead they create a new clip that is a version of the former with the changes applied. For instance: ::
 
     my_clip = VideoFileClip("some_file.mp4")
-    my_clip.set_inicia(t=5) # does nothing, changes are lost
-    my_new_clip = my_clip.set_inicia(t=5) # good !
+    my_clip.set_start(t=5) # does nothing, changes are lost
+    my_new_clip = my_clip.set_start(t=5) # good !
 
 Also, when you write ``clip.resize(width=640)``, it does not immediately applies the effect to all the frames of the clip, but only to the first frame: all the other frames will be resized only when required (that is, when you will write the whole clip to a file of when you will preview it). Said otherwise, creating a new clip is neither time nor memory hungry, all the computations happen during the final rendering.  
 
 Time representations in MoviePy
 ---------------------------------
 
-Many methods that we will see accept times as arguments. For instance ``clip.subclip(t_inicia,t_end)`` which cuts the clip between two times. For these methods, times can be represented either in seconds (``t_inicia=230.54``), as a couple (minutes, seconds) (``t_inicia=(3,50.54)``), as a triplet (hour, min, sec) (``t_inicia=(0,3,50.54)``) or as a string (``t_inicia='00:03:50.54')``).
+Many methods that we will see accept times as arguments. For instance ``clip.subclip(t_start,t_end)`` which cuts the clip between two times. For these methods, times can be represented either in seconds (``t_start=230.54``), as a couple (minutes, seconds) (``t_start=(3,50.54)``), as a triplet (hour, min, sec) (``t_start=(0,3,50.54)``) or as a string (``t_start='00:03:50.54')``).
 
-Most of the time when the times are not provided they are guessed, for instance in ``clip.subclip(t_inicia=50)`` it is implied that ``t_end`` corresponds to the fin of the clip, in ``clip.subclip(t_end=20)`` it is implied that t_inicia=0. If the time is negative it is considered as the time before the fin of the clip: ``clip.subclip(-20, -10)`` cuts the clip between 20s before the fin and 10s before the fin.
+Most of the time when the times are not provided they are guessed, for instance in ``clip.subclip(t_start=50)`` it is implied that ``t_end`` corresponds to the fin of the clip, in ``clip.subclip(t_end=20)`` it is implied that t_start=0. If the time is negative it is considered as the time before the fin of the clip: ``clip.subclip(-20, -10)`` cuts the clip between 20s before the fin and 10s before the fin.
 
 
 Methods to change the clip attributes

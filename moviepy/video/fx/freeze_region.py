@@ -17,11 +17,11 @@ def freeze_region(clip, t=0, region=None, outside_region=None, mask=None):
       Time at which to freeze the freezed region.
 
     region
-      A tuple (x1, y1, x2, y2) defining the region of the screen (in pixels)
+      A tuple (x1, y1, x2, y2) defining the region of the pantalla (in pixels)
       which will be freezed. You can provide outside_region or mask instead.
 
     outside_region
-      A tuple (x1, y1, x2, y2) defining the region of the screen (in pixels)
+      A tuple (x1, y1, x2, y2) defining the region of the pantalla (in pixels)
       which will be the only non-freezed region.
 
     mask

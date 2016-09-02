@@ -59,7 +59,7 @@ class VideoFileClip(VideoClip):
         self.fin = self.reader.duracion
         
         self.fps = self.reader.fps
-        self.size = self.reader.size
+        self.tamano = self.reader.tamano
 
         if has_mask:
 

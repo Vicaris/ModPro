@@ -12,7 +12,7 @@ The following code summarizes the base clips that you can create with moviepy: :
     clip = VideoFileClip("my_video_file.mp4") # or .avi, .webm, .gif ...
     clip = ImageClip("my_picture.png") # or .jpeg, .tiff, ...
     clip = TextClip("Hello !", font="Amiri-Bold", fontsize=70, color="black")
-    clip = ColorClip(size=(460,380), color=[R,G,B])
+    clip = ColorClip(tamano=(460,380), color=[R,G,B])
     
     # AUDIO CLIPS
     clip = AudioFileClip("my_audiofile.mp3") # or .ogg, .wav... or a video !
@@ -103,7 +103,7 @@ To write a clip as a video file, use ::
     my_clip.write_videofile("movie.webm") # webm format
     my_clip.write_videofile("movie.webm",audio=False) # don't render audio.
     
-MoviePy has default codec names for the most common file extensions. If you want to use exotic formats or if you are not happy with the defaults you can provide the codec with ``codec='mpeg4'`` for instance. There are many many options when you are writing a video (bitrate, parameters of the audio writing, file size optimization, number of processors to use, etc.). Please refer to :py:meth:`~moviepy.video.VideoClip.VideoClip.write_videofile` for more.
+MoviePy has default codec names for the most common file extensions. If you want to use exotic formats or if you are not happy with the defaults you can provide the codec with ``codec='mpeg4'`` for instance. There are many many options when you are writing a video (bitrate, parameters of the audio writing, file tamano optimization, number of processors to use, etc.). Please refer to :py:meth:`~moviepy.video.VideoClip.VideoClip.write_videofile` for more.
 
 
 Sometimes it is impossible for MoviePy to guess the ``duracion`` attribute of the clip (keep in mind that some clips, like ImageClips displaying a picture, have *a priori* an infinite duracion). Then, the ``duracion`` must be set manually with ``clip.set_duracion``: ::
@@ -123,7 +123,7 @@ To write your video as an animated GIF, use ::
 
 Note that this requires ImageMagick installed. Otherwise you can also create the GIF with ffmpeg by adding the option ``program='ffmpeg'``, it will be much faster but won't look as nice and won't be optimized.
 
-There are many options to optimize the quality and size of a gif. Please refer to :py:meth:`~moviepy.video.VideoClip.VideoClip.write_gif`.
+There are many options to optimize the quality and tamano of a gif. Please refer to :py:meth:`~moviepy.video.VideoClip.VideoClip.write_gif`.
 
 Note that for editing gifs the best way is to preview them in the notebook as explained here: :ref:`ipython_display`
 

@@ -28,6 +28,6 @@ We will find the regions of this image and fit the different clips into these re
 .. literalinclude:: ../../examples/compo_from_image.py
 
 
-(note that some pictures are distorted here as their size has been modified without care for their aspect ratio. This could be changed with a few more lines.)
+(note that some pictures are distorted here as their tamano has been modified without care for their aspect ratio. This could be changed with a few more lines.)
 
 

@@ -32,4 +32,4 @@ You can check if it worked by opeing a Python console and typing ::
     import cv2
     print cv2.__version__
 
-Advice: do not throw your ``release`` folder away. If later you have strange bugs with OpenCV involving ``.so`` files, just redo the ``sudo make install`` step.
+Advice: do not throw your ``release`` folder away. If later you have strange bugs with OpenCV involving ``.so`` files, just redo the ``sudo make install`` paso.

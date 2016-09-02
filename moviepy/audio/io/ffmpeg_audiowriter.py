@@ -26,7 +26,7 @@ class FFMPEG_AudioWriter:
     filename
       Name of any video or audio file, like ``video.mp4`` or ``sound.wav`` etc.
 
-    size
+    tamano
       Size (width,height) in pixels of the output video.
 
     fps_input

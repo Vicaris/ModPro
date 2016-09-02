@@ -10,7 +10,7 @@ folders and turn them into VideoClip methods, so that instead of
 we can write
 >>> clip.resize(2)
 
-It also inicias a PyGame session (if PyGame is installed) and enables
+It also starts a PyGame session (if PyGame is installed) and enables
 clip.preview().
 """
 

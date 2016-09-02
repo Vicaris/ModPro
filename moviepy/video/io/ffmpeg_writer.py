@@ -29,7 +29,7 @@ class FFMPEG_VideoWriter:
       complications it is recommended to use the generic extension
       '.avi' for all your videos.
 
-    size
+    tamano
       Size (width,height) of the output video in pixels.
 
     fps
@@ -67,7 +67,7 @@ class FFMPEG_VideoWriter:
 
     """
 
-    def __init__(self, filename, size, fps, codec="libx264", audiofile=None,
+    def __init__(self, filename, tamano, fps, codec="libx264", audiofile=None,
                  preset="medium", bitrate=None, withmask=False,
                  logfile=None, threads=None, ffmpeg_params=None):
 
@@ -85,7 +85,7 @@ class FFMPEG_VideoWriter:
             '-loglevel', 'error' if logfile == sp.PIPE else 'info',
             '-f', 'rawvideo',
             '-vcodec', 'rawvideo',
-            '-s', '%dx%d' % (size[0], size[1]),
+            '-s', '%dx%d' % (tamano[0], tamano[1]),
             '-pix_fmt', 'rgba' if withmask else 'rgb24',
             '-r', '%.02f' % fps,
             '-i', '-', '-an',
@@ -110,8 +110,8 @@ class FFMPEG_VideoWriter:
             cmd.extend(["-threads", str(threads)])
 
         if ((codec == 'libx264') and
-                (size[0] % 2 == 0) and
-                (size[1] % 2 == 0)):
+                (tamano[0] % 2 == 0) and
+                (tamano[1] % 2 == 0)):
             cmd.extend([
                 '-pix_fmt', 'yuv420p'
             ])
@@ -198,7 +198,7 @@ def ffmpeg_write_video(clip, filename, fps, codec="libx264", bitrate=None,
         logfile = None
 
     verbose_print(verbose, "[MoviePy] Writing video %s\n"%filename)
-    writer = FFMPEG_VideoWriter(filename, clip.size, fps, codec = codec,
+    writer = FFMPEG_VideoWriter(filename, clip.tamano, fps, codec = codec,
                                 preset=preset, bitrate=bitrate, logfile=logfile,
                                 audiofile=audiofile, threads=threads,
                                 ffmpeg_params=ffmpeg_params)

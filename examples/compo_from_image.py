@@ -19,12 +19,12 @@ clips = [VideoFileClip(n, audio=False).subclip(18,22) for n in
       "../../videos/grsm_0005.mov"]]
 
 # fit each clip into its region
-comp_clips =  [c.resize(r.size)
+comp_clips =  [c.resize(r.tamano)
                 .set_mask(r.mask)
                 .set_pos(r.screenpos)
                for c,r in zip(clips,regions)]
 
-cc = CompositeVideoClip(comp_clips,im.size)
+cc = CompositeVideoClip(comp_clips,im.tamano)
 cc.resize(0.6).write_videofile("../../composition.mp4")
 
 # Note that this particular composition takes quite a long time of

@@ -16,7 +16,7 @@ from moviepy.video.tools.drawing import color_gradient
 # RESOLUTION
 
 w = 720
-h = w*9/16 # 16/9 screen
+h = w*9/16 # 16/9 pantalla
 moviesize = w,h
 
 
@@ -60,7 +60,7 @@ moving_txt= clip_txt.fl(fl, apply_to=['mask'])
 
 # ADD A VANISHING EFFECT ON THE TEXT WITH A GRADIENT MASK
 
-grad = color_gradient(moving_txt.size,p1=(0,2*h/3),
+grad = color_gradient(moving_txt.tamano,p1=(0,2*h/3),
                 p2=(0,h/4),col1=0.0,col2=1.0)
 gradmask = ImageClip(grad,ismask=True)
 fl = lambda pic : np.minimum(pic,gradmask.img)
@@ -96,7 +96,7 @@ stars_darkened = stars.fl_image(lambda pic: (0.6*pic).astype('int16'))
 final = CompositeVideoClip([
          stars_darkened,
          warped_txt.set_pos(('center','bottom'))],
-         size = moviesize)
+         tamano = moviesize)
 
 
 # WRITE TO A FILE
@@ -140,7 +140,7 @@ def resizeCenter(clip):
 
     
 def composeCenter(clip):
-    return CompositeVideoClip([clip.set_pos('center')],size=moviesize)
+    return CompositeVideoClip([clip.set_pos('center')],tamano=moviesize)
 
 
 

@@ -14,8 +14,8 @@ class CompositeVideoClip(VideoClip):
     Parameters
     ----------
 
-    size
-      The size (height x width) of the final clip.
+    tamano
+      The tamano (height x width) of the final clip.
 
     clips
       A list of videoclips. Each clip of the list will
@@ -37,7 +37,7 @@ class CompositeVideoClip(VideoClip):
     use_bgclip
       Set to True if the first clip in the list should be used as the
       'background' on which all other clips are blitted. That first clip must
-      have the same size as the final clip. If it has no transparency, the final
+      have the same tamano as the final clip. If it has no transparency, the final
       clip will have no mask. 
     
     If all clips with a fps attribute have the same fps, it becomes the fps of
@@ -45,11 +45,11 @@ class CompositeVideoClip(VideoClip):
 
     """
 
-    def __init__(self, clips, size=None, bg_color=None, use_bgclip=False,
+    def __init__(self, clips, tamano=None, bg_color=None, use_bgclip=False,
                  ismask=False):
 
-        if size is None:
-            size = clips[0].size
+        if tamano is None:
+            tamano = clips[0].tamano
 
         
         if use_bgclip and (clips[0].mask is None):
@@ -67,7 +67,7 @@ class CompositeVideoClip(VideoClip):
 
         VideoClip.__init__(self)
         
-        self.size = size
+        self.tamano = tamano
         self.ismask = ismask
         self.clips = clips
         self.bg_color = bg_color
@@ -77,7 +77,7 @@ class CompositeVideoClip(VideoClip):
             self.clips = clips[1:]
         else:
             self.clips = clips
-            self.bg = ColorClip(size, col=self.bg_color)
+            self.bg = ColorClip(tamano, col=self.bg_color)
 
         
         
@@ -98,7 +98,7 @@ class CompositeVideoClip(VideoClip):
                           c.add_mask().mask).set_pos(c.pos)
                           for c in self.clips]
 
-            self.mask = CompositeVideoClip(maskclips,self.size, ismask=True,
+            self.mask = CompositeVideoClip(maskclips,self.tamano, ismask=True,
                                                bg_color=0.0)
 
         def make_frame(t):
@@ -139,7 +139,7 @@ def clips_array(array, rows_widths=None, cols_widths=None,
     """
     
     array = np.array(array)
-    sizes_array = np.array([[c.size for c in line] for line in array])
+    sizes_array = np.array([[c.tamano for c in line] for line in array])
     
     # find row width and col_widths automatically if not provided
     if rows_widths is None:
@@ -153,16 +153,16 @@ def clips_array(array, rows_widths=None, cols_widths=None,
     for j,(x,cw) in list(enumerate(zip(xx[:-1],cols_widths))):
         for i,(y,rw) in list(enumerate(zip(yy[:-1],rows_widths))):
             clip = array[i,j]
-            w,h = clip.size
+            w,h = clip.tamano
             if (w < cw) or (h < rw):
                 clip = (CompositeVideoClip([clip.set_pos('center')],
-                                          size = (cw,rw),
+                                          tamano = (cw,rw),
                                           bg_color = bg_color).
                                      set_duracion(clip.duracion))
                 
             array[i,j] = clip.set_pos((x,y))
                  
-    return CompositeVideoClip(array.flatten(), size = (xx[-1],yy[-1]),
+    return CompositeVideoClip(array.flatten(), tamano = (xx[-1],yy[-1]),
                               bg_color = bg_color)
     
     

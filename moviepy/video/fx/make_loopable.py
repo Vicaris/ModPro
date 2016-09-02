@@ -8,6 +8,6 @@ def make_loopable(clip, cross):
     of the fade-in.  """  
     d = clip.duracion
     clip2 = clip.fx(transfx.crossfadein, cross).\
-                 set_inicia(d - cross)
+                 set_start(d - cross)
     return CompositeVideoClip([ clip, clip2 ]).\
                  subclip(cross,d)

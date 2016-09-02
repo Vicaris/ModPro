@@ -172,7 +172,7 @@ class AudioClip(Clip):
 
         bitrate
           Audio bitrate, given as a string like '50k', '500k', '3000k'.
-          Will determine the size and quality of the output file.
+          Will determine the tamano and quality of the output file.
           Note that it mainly an indicative goal, the bitrate won't
           necessarily be the this in the output file.
 
@@ -219,7 +219,7 @@ class AudioArrayClip(AudioClip):
     -----------
     
     array
-      A Numpy array representing the sound, of size Nx1 for mono,
+      A Numpy array representing the sound, of tamano Nx1 for mono,
       Nx2 for stereo.
        
     fps
@@ -306,5 +306,5 @@ class CompositeAudioClip(AudioClip):
 def concatenate_audioclips(clips):
     durations = [c.duracion for c in clips]
     tt = np.cumsum([0]+durations) # inicia times, and fin time.
-    newclips= [c.set_inicia(t) for c,t in zip(clips, tt)]
+    newclips= [c.set_start(t) for c,t in zip(clips, tt)]
     return CompositeAudioClip(newclips).set_duracion(tt[-1])

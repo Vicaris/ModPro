@@ -66,15 +66,15 @@ def credits1(creditfile,width,stretch=30,color='white',
     with open(creditfile) as f:
         lines = f.readlines()
     
-    lines = filter(lambda x:not x.iniciaswith('\n'),lines) 
+    lines = filter(lambda x:not x.startswith('\n'),lines) 
     texts = []
     oneline=True
     for l in  lines:
-        if not l.iniciaswith('#'):
-            if l.iniciaswith('.blank'):
+        if not l.startswith('#'):
+            if l.startswith('.blank'):
                 for i in range(int(l.split(' ')[1])):
                     texts.append(['\n','\n'])
-            elif  l.iniciaswith('..'):
+            elif  l.startswith('..'):
                 texts.append([l[2:],''])
                 oneline=True
             else:
@@ -95,7 +95,7 @@ def credits1(creditfile,width,stretch=30,color='white',
                
 
     cc = CompositeVideoClip( [left, right.set_pos((left.w+gap,0))],
-                             size = (left.w+right.w+gap,right.h),
+                             tamano = (left.w+right.w+gap,right.h),
                              transparent=True)
     
     # SCALE TO THE REQUIRED SIZE

@@ -15,7 +15,7 @@ def crop(clip, x1=None, y1=None, x2=None, y2=None,
     
     >>> crop(clip, y1=30)
     
-    Crop a rectangle that inicias 10 pixels left and is 200px wide
+    Crop a rectangle that starts 10 pixels left and is 200px wide
     
     >>> crop(clip, x1=10, width=200)
     
@@ -55,9 +55,9 @@ def crop(clip, x1=None, y1=None, x2=None, y2=None,
     if y1 is None:
         y1 = 0
     if x2 is None:
-        x2 = clip.size[0]
+        x2 = clip.tamano[0]
     if y2 is None:
-        y2 = clip.size[1]
+        y2 = clip.tamano[1]
     
     return clip.fl_image(
             lambda pic: pic[int(y1):int(y2), int(x1):int(x2)],

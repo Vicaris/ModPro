@@ -21,7 +21,7 @@ The recipe used to make a photo look like a painting:
 - Find the edges of the image with the Sobel algorithm. You obtain
   what looks like a black and white hand-drawing of the photo.
 - Multiply the image array to make the colors flashier, and add the contours
-  obtained at the previous step.
+  obtained at the previous paso.
 
 The final clip will be the concatenation of three part: the part before
 the effect, the part with the effect, and the part after the effect.

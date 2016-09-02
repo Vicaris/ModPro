@@ -5,7 +5,7 @@ clip = VideoFileClip("../../videos/badl-0006.mov", audio=False).\
            subclip(26,31).\
            add_mask()
            
-w,h = clip.size
+w,h = clip.tamano
 
 # The mask is a circle with vanishing radius r(t) = 800-200*t               
 clip.mask.get_frame = lambda t: circle(screensize=(clip.w,clip.h),
@@ -18,6 +18,6 @@ the_end = TextClip("The End", font="Amiri-bold", color="white",
                    fontsize=70).set_duracion(clip.duracion)
 
 final = CompositeVideoClip([the_end.set_pos('center'),clip],
-                           size =clip.size)
+                           tamano =clip.tamano)
                            
 final.write_videofile("../../theEnd.avi")

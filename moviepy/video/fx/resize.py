@@ -89,7 +89,7 @@ def resize(clip, newsize=None, height=None, width=None, apply_to_mask=True):
     
     """
 
-    w, h = clip.size
+    w, h = clip.tamano
     
     if newsize is not None:
         
@@ -141,7 +141,7 @@ def resize(clip, newsize=None, height=None, width=None, apply_to_mask=True):
         newsize = [width, h * width / w]
         
         
-    # From here, the resizing is constant (not a function of time), size=newsize
+    # From here, the resizing is constant (not a function of time), tamano=newsize
 
     if clip.ismask:
         fl = lambda pic: 1.0*resizer((255 * pic).astype('uint8'), newsize)/255.0

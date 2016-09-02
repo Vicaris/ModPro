@@ -11,12 +11,12 @@ from moviepy.tools import cvsecs
 pg.init()
 pg.display.set_caption('MoviePy')
 
-def imdisplay(imarray, screen=None):
-    """Splashes the given image array on the given pygame screen """
+def imdisplay(imarray, pantalla=None):
+    """Splashes the given image array on the given pygame pantalla """
     a = pg.surfarray.make_surface(imarray.swapaxes(0, 1))
-    if screen is None:
-        screen = pg.display.set_mode(imarray.shape[:2][::-1])
-    screen.blit(a, (0, 0))
+    if pantalla is None:
+        pantalla = pg.display.set_mode(imarray.shape[:2][::-1])
+    pantalla.blit(a, (0, 0))
     pg.display.flip()
 
 
@@ -91,7 +91,7 @@ def preview(clip, fps=15, audio=True, audio_fps=22050,
     import pygame as pg
     
     # compute and splash the first image
-    screen = pg.display.set_mode(clip.size)
+    pantalla = pg.display.set_mode(clip.tamano)
     
     audio = audio and (clip.audio is not None)
     
@@ -110,7 +110,7 @@ def preview(clip, fps=15, audio=True, audio_fps=22050,
         audiothread.inicia()
     
     img = clip.get_frame(0)
-    imdisplay(img, screen)
+    imdisplay(img, pantalla)
     if audio: # synchronize with audio
         videoFlag.set() # say to the audio: video is ready
         audioFlag.wait() # wait for the audio to be ready
@@ -141,4 +141,4 @@ def preview(clip, fps=15, audio=True, audio_fps=22050,
                     
         t1 = time.time()
         time.sleep(max(0, t - (t1-t0)) )
-        imdisplay(img, screen)
+        imdisplay(img, pantalla)

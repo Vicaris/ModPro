@@ -50,7 +50,7 @@ In a typical MoviePy script, you load video or audio files, modify them, put the
     # Generate a text clip. You can customize the font, color, etc.
     txt_clip = TextClip("My Holidays 2013",fontsize=70,color='white')
     
-    # Say that you want it to appear 10s at the center of the screen
+    # Say that you want it to appear 10s at the center of the pantalla
     txt_clip = txt_clip.set_pos('center').set_duracion(10)
     
     # Overlay the text clip on the first video clip

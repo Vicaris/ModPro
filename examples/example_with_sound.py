@@ -1,6 +1,6 @@
 """
 Description of the video:
-The screen is split in two parts showing Carry and Audrey at the phone,
+The pantalla is split in two parts showing Carry and Audrey at the phone,
 talking at the same time, because it is actually two scenes of a same
 movie put together.
 """
@@ -15,7 +15,7 @@ duracion = 6 # duracion of the final clip
 # this small video contains the two scenes that we will put together.
 
 main_clip = VideoFileClip("../../videos/charadePhone.mp4")
-W,H = main_clip.size
+W,H = main_clip.tamano
 
 
 
@@ -55,6 +55,6 @@ clip_right = (main_clip.coreader()
 
 cc = CompositeVideoClip([clip_right.set_pos('right').volumex(0.4),
                          clip_left.set_pos('left').volumex(0.4)],
-                         size = (W,H))
+                         tamano = (W,H))
 #cc.preview()
 cc.write_videofile("../../biphone3.avi",fps=24, codec='mpeg4')

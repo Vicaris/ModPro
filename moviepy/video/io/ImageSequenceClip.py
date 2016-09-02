@@ -79,14 +79,14 @@ class ImageSequenceClip(VideoClip):
         if fps is not None:
             durations = [1.0/fps for image in sequence]
         self.durations = durations
-        self.images_inicias = [0]+list(np.cumsum(durations))
+        self.images_starts = [0]+list(np.cumsum(durations))
         self.duracion = sum(durations)
         self.fin = self.duracion
         self.sequence = sequence
         
         def find_image_index(t):
             return max([i for i in range(len(self.sequence))
-                              if self.images_inicias[i]<=t])
+                              if self.images_starts[i]<=t])
 
         if fromfiles:
 
@@ -120,7 +120,7 @@ class ImageSequenceClip(VideoClip):
                     return self.mask.lastimage
 
                 self.mask.make_frame = mask_make_frame
-                self.mask.size = mask_make_frame(0).shape[:2][::-1]
+                self.mask.tamano = mask_make_frame(0).shape[:2][::-1]
 
 
         else:
@@ -139,8 +139,8 @@ class ImageSequenceClip(VideoClip):
                     return 1.0*self.sequence[index][:,:,3]/255
 
                 self.mask.make_frame = mask_make_frame
-                self.mask.size = mask_make_frame(0).shape[:2][::-1]
+                self.mask.tamano = mask_make_frame(0).shape[:2][::-1]
         
             
         self.make_frame = make_frame
-        self.size = make_frame(0).shape[:2][::-1]
+        self.tamano = make_frame(0).shape[:2][::-1]

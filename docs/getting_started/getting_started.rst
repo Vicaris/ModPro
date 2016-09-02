@@ -1,7 +1,7 @@
-.. _getting_iniciaed:
+.. _getting_started:
 
 
-Getting iniciaed with MoviePy
+Getting started with MoviePy
 ------------------------------
 
 

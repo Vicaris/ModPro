@@ -9,7 +9,7 @@ def PIL_to_npimage(im):
     """ Transforms a PIL/Pillow image into a numpy RGB(A) image.
         Actually all this do is returning numpy.array(im)."""
     return np.array(im)
-    #w,h = im.size
+    #w,h = im.tamano
     #d = (4 if im.mode=="RGBA" else 3)
     #return +np.frombuffer(im.tobytes(), dtype='uint8').reshape((h,w,d))
 

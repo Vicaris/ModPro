@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # MoviePy documentation build configuration file, created by
-# sphinx-quickinicia on Sat Jul 13 14:47:48 2013.
+# sphinx-quickstart on Sat Jul 13 14:47:48 2013.
 #
 # This file is execfile()d with the current directory set to its containing dir.
 #
@@ -182,10 +182,10 @@ htmlhelp_basename = 'MoviePydoc'
 # -- Options for LaTeX output --------------------------------------------------
 
 latex_elements = {
-# The paper size ('letterpaper' or 'a4paper').
+# The paper tamano ('letterpaper' or 'a4paper').
 #'papersize': 'letterpaper',
 
-# The font size ('10pt', '11pt' or '12pt').
+# The font tamano ('10pt', '11pt' or '12pt').
 #'pointsize': '10pt',
 
 # Additional stuff for the LaTeX preamble.

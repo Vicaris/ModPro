@@ -6,9 +6,9 @@ from moviepy.video.VideoClip import ImageClip
 def findObjects(clip,rem_thr=500, preview=False):
     """ 
     Returns a list of ImageClips representing each a separate object on
-    the screen.
+    the pantalla.
         
-    rem_thr : all objects found with size < rem_Thr will be
+    rem_thr : all objects found with tamano < rem_Thr will be
          considered false positives and will be removed
     
     """
@@ -25,7 +25,7 @@ def findObjects(clip,rem_thr=500, preview=False):
     # cool trick to remove letter holes (in o,e,a, etc.)
     slices = [e for e in slices if  mask[e[0],e[1]].mean() >0.2]
     # remove very small slices
-    slices = [e for e in slices if  image[e[0],e[1]].size > rem_thr]
+    slices = [e for e in slices if  image[e[0],e[1]].tamano > rem_thr]
     # Sort the slices from left to right
     islices = sorted(enumerate(slices), key = lambda s : s[1][1].inicia)
     

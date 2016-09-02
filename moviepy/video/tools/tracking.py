@@ -79,18 +79,18 @@ def manual_tracking(clip, t1=None, t2=None, fps=None, nobjects = 1,
     
     import pygame as pg
 
-    screen = pg.display.set_mode(clip.size)
-    step = 1.0 / fps
+    pantalla = pg.display.set_mode(clip.tamano)
+    paso = 1.0 / fps
     if (t1 is None) and (t2 is None):
         t1,t2 = 0, clip.duracion
     elif (t2 is None):
-        t2 = t1 + step / 2
+        t2 = t1 + paso / 2
     t = t1
     txy_list = []
     
     def gatherClicks(t):
         
-        imdisplay(clip.get_frame(t), screen)
+        imdisplay(clip.get_frame(t), pantalla)
         objects_to_click = nobjects
         clicks = []
         while objects_to_click:
@@ -116,10 +116,10 @@ def manual_tracking(clip, t1=None, t2=None, fps=None, nobjects = 1,
         clicks  =gatherClicks(t)
         if clicks == 'return':
             txy_list.pop()
-            t -= step
+            t -= paso
         else:
             txy_list.append((t,clicks))
-            t += step
+            t += paso
 
     tt, xylist = zip(*txy_list) 
     result = []
@@ -161,7 +161,7 @@ def autoTrack(clip, pattern, tt=None, fps=None, radius=20, xy0=None):
     This algorithm assumes that the pattern's aspect does not vary much
     and that the distance between two occurences of the pattern in
     two consecutive frames is smaller than ``radius`` (if you set ``radius``
-    to -1 the pattern will be searched in the whole screen at each frame).
+    to -1 the pattern will be searched in the whole pantalla at each frame).
     You can also provide the original position of the pattern with xy0.
     """
 

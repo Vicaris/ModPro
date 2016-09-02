@@ -23,7 +23,7 @@ User Guide
    :maxdepth: 1
    
    install
-   getting_iniciaed/getting_iniciaed
+   getting_started/getting_started
    gallery
    examples/examples
    FAQ
@@ -37,14 +37,14 @@ MoviePy is an open source software originally written by Zulko_ and released und
 .. raw:: html
 
     <a href="https://twitter.com/share" class="twitter-share-button"
-    data-text="MoviePy - Video editing with Python" data-size="large" data-hashtags="MoviePy">Tweet
+    data-text="MoviePy - Video editing with Python" data-tamano="large" data-hashtags="MoviePy">Tweet
     </a>
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
     if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
     fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
     </script>
     
-    <iframe src="http://ghbtns.com/github-btn.html?user=Zulko&repo=moviepy&type=watch&count=true&size=large"
+    <iframe src="http://ghbtns.com/github-btn.html?user=Zulko&repo=moviepy&type=watch&count=true&tamano=large"
     allowtransparency="true" frameborder="0" scrolling="0" width="152px" height="30px"></iframe>
 ..    <a href="https://github.com/Zulko/moviepy">
 ..    <img style="position: absolute; top: 0; right: 0; border: 0;"

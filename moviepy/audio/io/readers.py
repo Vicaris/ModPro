@@ -28,7 +28,7 @@ class FFMPEG_AudioReader:
       ``sound.wav`` etc.
 
     buffersize
-      The size of the buffer to use. Should be bigger than the buffer
+      The tamano of the buffer to use. Should be bigger than the buffer
       used by ``to_audiofile``
 
     print_infos
@@ -65,20 +65,20 @@ class FFMPEG_AudioReader:
         self.nframes = int(self.fps * self.duracion)
         self.buffersize= min( self.nframes+1, buffersize )
         self.buffer= None
-        self.buffer_iniciaframe = 1
+        self.buffer_startframe = 1
         self.initialize()
         self.buffer_around(1)
 
 
 
-    def initialize(self, iniciatime = 0):
+    def initialize(self, starttime = 0):
         """ Opens the file, creates the pipe. """
 
         self.close_proc() # if any
 
-        if iniciatime !=0 :
-            offset = min(1,iniciatime)
-            i_arg = ["-ss", "%.05f"%(iniciatime-offset),
+        if starttime !=0 :
+            offset = min(1,starttime)
+            i_arg = ["-ss", "%.05f"%(starttime-offset),
                     '-i', self.filename, '-vn',
                     "-ss", "%.05f"%offset]
         else:
@@ -102,7 +102,7 @@ class FFMPEG_AudioReader:
 
         self.proc = sp.Popen( cmd, **popen_params)
 
-        self.pos = np.round(self.fps*iniciatime)
+        self.pos = np.round(self.fps*starttime)
 
 
 
@@ -173,17 +173,17 @@ class FFMPEG_AudioReader:
             fr_min, fr_max = frames.min(), frames.max()
 
             if not (0 <=
-                     (fr_min - self.buffer_iniciaframe)
+                     (fr_min - self.buffer_startframe)
                           < len(self.buffer)):
                 self.buffer_around(fr_min)
             elif not (0 <=
-                        (fr_max - self.buffer_iniciaframe)
+                        (fr_max - self.buffer_startframe)
                              < len(self.buffer)):
                 self.buffer_around(fr_max)
 
             try:
                 result = np.zeros((len(tt),self.nchannels))
-                indices = frames - self.buffer_iniciaframe
+                indices = frames - self.buffer_startframe
                 result[in_time] = self.buffer[indices]
                 return result
             except IndexError as error:
@@ -198,12 +198,12 @@ class FFMPEG_AudioReader:
             if ind<0 or ind> self.nframes: # out of time: return 0
                 return np.zeros(self.nchannels)
 
-            if not (0 <= (ind - self.buffer_iniciaframe) <len(self.buffer)):
+            if not (0 <= (ind - self.buffer_startframe) <len(self.buffer)):
                 # out of the buffer: recenter the buffer
                 self.buffer_around(ind)
 
             # read the frame in the buffer
-            return self.buffer[ind - self.buffer_iniciaframe]
+            return self.buffer[ind - self.buffer_startframe]
 
 
     def buffer_around(self,framenumber):
@@ -213,27 +213,27 @@ class FFMPEG_AudioReader:
         """
 
         # inicia-frame for the buffer
-        new_bufferinicia = max(0,  framenumber - self.buffersize // 2)
+        new_bufferstart = max(0,  framenumber - self.buffersize // 2)
 
 
         if (self.buffer is not None):
-            current_f_end  = self.buffer_iniciaframe + self.buffersize
-            if (new_bufferinicia <
+            current_f_end  = self.buffer_startframe + self.buffersize
+            if (new_bufferstart <
                         current_f_end  <
-                               new_bufferinicia + self.buffersize):
+                               new_bufferstart + self.buffersize):
                 # We already have one bit of what must be read
-                conserved = current_f_end - new_bufferinicia + 1
+                conserved = current_f_end - new_bufferstart + 1
                 chunksize = self.buffersize-conserved
                 array = self.read_chunk(chunksize)
                 self.buffer = np.vstack([self.buffer[-conserved:], array])
             else:
-                self.seek(new_bufferinicia)
+                self.seek(new_bufferstart)
                 self.buffer =  self.read_chunk(self.buffersize)
         else:
-            self.seek(new_bufferinicia)
+            self.seek(new_bufferstart)
             self.buffer =  self.read_chunk(self.buffersize)
 
-        self.buffer_iniciaframe = new_bufferinicia
+        self.buffer_startframe = new_bufferstart
 
 
     def __del__(self):

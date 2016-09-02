@@ -10,7 +10,7 @@ def margin(clip, mar=None, left=0, right=0, top=0,
     Draws an external margin all around the frame.
     
     :param mar: if not ``None``, then the new clip has a margin of
-        size ``mar`` in pixels on the left, right, top, and bottom.
+        tamano ``mar`` in pixels on the left, right, top, and bottom.
         
     :param left, right, top, bottom: width of the margin in pixel
         in these directions.

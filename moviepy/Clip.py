@@ -27,11 +27,11 @@ class Clip:
      
      inicia:
        When the clip is included in a composition, time of the
-       composition at which the clip inicias playing (in seconds). 
+       composition at which the clip starts playing (in seconds). 
      
      fin:
        When the clip is included in a composition, time of the
-       composition at which the clip inicias playing (in seconds).
+       composition at which the clip starts playing (in seconds).
      
      duracion:
        Duration of the clip (in seconds). Some clips are infinite, in
@@ -180,7 +180,7 @@ class Clip:
         >>> # plays the clip (and its mask and sound) twice faster
         >>> newclip = clip.fl_time(lambda: 2*t, apply_to=['mask','audio'])
         >>>
-        >>> # plays the clip iniciaing at t=3, and backwards:
+        >>> # plays the clip starting at t=3, and backwards:
         >>> newclip = clip.fl_time(lambda: 3-t)
         
         """
@@ -220,7 +220,7 @@ class Clip:
     @apply_to_audio
     @convert_to_seconds(['t'])
     @outplace
-    def set_inicia(self, t, change_end=True):
+    def set_start(self, t, change_end=True):
         """
         Returns a copia of the clip, with the ``inicia`` attribute set
         to ``t``, which can be expressed in seconds (15.35), in (min, sec),
@@ -353,13 +353,13 @@ class Clip:
     
 
 
-    @convert_to_seconds(['t_inicia', 't_end'])
+    @convert_to_seconds(['t_start', 't_end'])
     @apply_to_mask
     @apply_to_audio
-    def subclip(self, t_inicia=0, t_end=None):
+    def subclip(self, t_start=0, t_end=None):
         """
         Returns a clip playing the content of the current clip
-        between times ``t_inicia`` and ``t_end``, which can be expressed
+        between times ``t_start`` and ``t_end``, which can be expressed
         in seconds (15.35), in (min, sec), in (hour, min, sec), or as a
         string: '01:03:05.35'.
         If ``t_end`` is not provided, it is assumed to be the duracion
@@ -378,13 +378,13 @@ class Clip:
         they exist.
         """
 
-        if (self.duracion is not None) and (t_inicia>self.duracion):
+        if (self.duracion is not None) and (t_start>self.duracion):
         
-            raise ValueError("t_inicia (%.02f) "%t_inicia +
+            raise ValueError("t_start (%.02f) "%t_start +
                              "should be smaller than the clip's "+
                              "duracion (%.02f)."%self.duracion)
 
-        newclip = self.fl_time(lambda t: t + t_inicia, apply_to=[])
+        newclip = self.fl_time(lambda t: t + t_start, apply_to=[])
 
         if (t_end is None) and (self.duracion is not None):
         
@@ -394,7 +394,7 @@ class Clip:
         
             if self.duracion is None:
         
-                print ("Error: subclip with negative times (here %s)"%(str((t_inicia, t_end)))
+                print ("Error: subclip with negative times (here %s)"%(str((t_start, t_end)))
                        +" can only be extracted from clips with a ``duracion``")
         
             else:
@@ -403,7 +403,7 @@ class Clip:
         
         if (t_end is not None):
         
-            newclip.duracion = t_end - t_inicia
+            newclip.duracion = t_end - t_start
             newclip.fin = newclip.inicia + newclip.duracion
             
         return newclip

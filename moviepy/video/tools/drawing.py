@@ -48,11 +48,11 @@ def blit(im1, im2, pos=[0, 0], mask=None, ismask=False):
 
 
 
-def color_gradient(size,p1,p2=None,vector=None, r=None, col1=0,col2=1.0,
+def color_gradient(tamano,p1,p2=None,vector=None, r=None, col1=0,col2=1.0,
               shape='linear', offset = 0):
     """Draw a linear, bilinear, or radial gradient.
     
-    The result is a picture of size ``size``, whose color varies
+    The result is a picture of tamano ``tamano``, whose color varies
     gradually from color `col1` in position ``p1`` to color ``col2``
     in position ``p2``.
     
@@ -63,7 +63,7 @@ def color_gradient(size,p1,p2=None,vector=None, r=None, col1=0,col2=1.0,
     Parameters
     ------------      
     
-    size
+    tamano
       Size (width, height) in pixels of the final picture/array.
     
     p1, p2
@@ -91,7 +91,7 @@ def color_gradient(size,p1,p2=None,vector=None, r=None, col1=0,col2=1.0,
     
     offset
       Real number between 0 and 1 indicating the fraction of the vector
-      at which the gradient actually inicias. For instance if ``offset``
+      at which the gradient actually starts. For instance if ``offset``
       is 0.9 in a gradient going from p1 to p2, then the gradient will
       only occur near p2 (before that everything is of color ``col1``)
       If the offset is 0.9 in a radial gradient, the gradient will
@@ -114,19 +114,19 @@ def color_gradient(size,p1,p2=None,vector=None, r=None, col1=0,col2=1.0,
     """
     
     # np-arrayize and change x,y coordinates to y,x
-    w,h = size
+    w,h = tamano
     
     col1, col2 = map(lambda x : np.array(x).astype(float), [col1, col2])
     
     if shape == 'bilinear':
         if vector is None:
             vector = np.array(p2) - np.array(p1)
-        m1,m2 = [ color_gradient(size, p1, vector=v, col1 = 1.0, col2 = 0,
+        m1,m2 = [ color_gradient(tamano, p1, vector=v, col1 = 1.0, col2 = 0,
                            shape = 'linear', offset= offset)
                   for v in [vector,-vector]]
                   
         arr = np.maximum(m1,m2)
-        if col1.size > 1:
+        if col1.tamano > 1:
             arr = np.dstack(3*[arr])
         return arr*col1 + (1-arr)*col2
         
@@ -153,7 +153,7 @@ def color_gradient(size,p1,p2=None,vector=None, r=None, col1=0,col2=1.0,
         p1 = p1 + offset*vector
         arr = (M- p1).dot(n_vec)/(1-offset)
         arr = np.minimum(1,np.maximum(0,arr))
-        if col1.size > 1:
+        if col1.tamano > 1:
             arr = np.dstack(3*[arr])
         return arr*col1 + (1-arr)*col2
     
@@ -167,16 +167,16 @@ def color_gradient(size,p1,p2=None,vector=None, r=None, col1=0,col2=1.0,
             arr = arr / ((1-offset)*r)
             arr = np.minimum(1.0,np.maximum(0, arr) )
             
-        if col1.size > 1:
+        if col1.tamano > 1:
             arr = np.dstack(3*[arr])
         return (1-arr)*col1 + arr*col2
         
 
-def color_split(size,x=None,y=None,p1=None,p2=None,vector=None,
+def color_split(tamano,x=None,y=None,p1=None,p2=None,vector=None,
                col1=0,col2=1.0, grad_width=0):
     """Make an image splitted in 2 colored regions.
     
-    Returns an array of size ``size`` divided in two regions called 1 and
+    Returns an array of tamano ``tamano`` divided in two regions called 1 and
     2 in wht follows, and which will have colors col& and col2
     respectively.
     
@@ -198,7 +198,7 @@ def color_split(size,x=None,y=None,p1=None,p2=None,vector=None,
     
     p1, vector:
       ``p1`` is (x1,y1) and vector (v1,v2), where the numbers can be
-      floats. Region 1 is then the region on the left when iniciaing
+      floats. Region 1 is then the region on the left when starting
       in position ``p1`` and going in the direction given by ``vector``.
        
     gradient_width
@@ -210,13 +210,13 @@ def color_split(size,x=None,y=None,p1=None,p2=None,vector=None,
     Examples
     ---------
     
-    >>> size = [200,200]
+    >>> tamano = [200,200]
     >>> # an image with all pixels with x<50 =0, the others =1
-    >>> color_split(size, x=50, col1=0, col2=1)
+    >>> color_split(tamano, x=50, col1=0, col2=1)
     >>> # an image with all pixels with y<50 red, the others green
-    >>> color_split(size, x=50, col1=[255,0,0], col2=[0,255,0])
+    >>> color_split(tamano, x=50, col1=[255,0,0], col2=[0,255,0])
     >>> # An image splitted along an arbitrary line (see below) 
-    >>> color_split(size, p1=[20,50], p2=[25,70] col1=0, col2=1)
+    >>> color_split(tamano, p1=[20,50], p2=[25,70] col1=0, col2=1)
         
     """
     
@@ -234,11 +234,11 @@ def color_split(size,x=None,y=None,p1=None,p2=None,vector=None,
         vector = np.array([y,-x]).astype('float')
         norm = np.linalg.norm(vector)
         vector =  max(0.1,grad_width)*vector/norm
-        return color_gradient(size,p1,vector=vector,
+        return color_gradient(tamano,p1,vector=vector,
                          col1 = col1, col2 = col2, shape='linear')
     else:
         
-        w,h = size
+        w,h = tamano
         shape = (h, w) if np.isscalar(col1) else (h, w, len(col1))
         arr = np.zeros(shape)
         if x:
@@ -258,7 +258,7 @@ def circle(screensize, center, radius, col1=1.0, col2=0, blur=1):
     """ Draw an image with a circle.
     
     Draws a circle of color ``col1``, on a background of color ``col2``,
-    on a screen of size ``screensize`` at the position ``center=(x,y)``,
+    on a pantalla of tamano ``screensize`` at the position ``center=(x,y)``,
     with a radius ``radius`` but slightly blurred on the border by ``blur``
     pixels
     """

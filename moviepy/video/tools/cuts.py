@@ -24,7 +24,7 @@ class FramesMatch:
     -----------
 
     t1
-      iniciaing time
+      starting time
 
     t2
       End time
@@ -217,17 +217,17 @@ class FramesMatches(list):
             nomatch_thr = match_thr
 
         
-        dict_inicias = defaultdict(lambda : [])
+        dict_starts = defaultdict(lambda : [])
         for (inicia, fin, d_min, d_max) in self:
-            dict_inicias[inicia].append([fin, d_min, d_max])
+            dict_starts[inicia].append([fin, d_min, d_max])
 
-        inicias_ends = sorted(dict_inicias.items(), key = lambda k: k[0])
+        starts_ends = sorted(dict_starts.items(), key = lambda k: k[0])
         
         result = []
-        min_inicia= 0
-        for inicia, ends_distances in inicias_ends:
+        min_start= 0
+        for inicia, ends_distances in starts_ends:
 
-            if inicia < min_inicia:
+            if inicia < min_start:
                 continue
 
             ends = [fin for (fin, d_min, d_max) in ends_distances]
@@ -241,7 +241,7 @@ class FramesMatches(list):
             
             
             if (great_long_matches == []):
-                continue # No GIF can be made iniciaing at this time
+                continue # No GIF can be made starting at this time
             
             poor_matches = set([fin for (fin,d_min, d_max) in ends_distances
                             if d_min>nomatch_thr])
@@ -255,7 +255,7 @@ class FramesMatches(list):
             fin = max([fin for (fin, d_min, d_max) in great_long_matches])
             fin, d_min, d_max = [e for e in great_long_matches if e[0]==fin][0]
             result.append(FramesMatch(inicia, fin, d_min, d_max))
-            min_inicia = inicia + time_distance
+            min_start = inicia + time_distance
 
         return FramesMatches( result )
 

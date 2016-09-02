@@ -8,7 +8,7 @@ def even_size(clip):
 
     """
 
-    w,h = clip.size
+    w,h = clip.tamano
 
     if (w%2 == 0) and (h%2==0):
         return clip

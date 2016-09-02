@@ -8,7 +8,7 @@ screensize = (720,460)
 txtClip = TextClip('Cool effect',color='white', font="Amiri-Bold",
                    kerning = 5, fontsize=100)
 cvc = CompositeVideoClip( [txtClip.set_pos('center')],
-                        size=screensize, transparent=True)
+                        tamano=screensize, transparent=True)
 
 # THE NEXT FOUR FUNCTIONS DEFINE FOUR WAYS OF MOVING THE LETTERS
 
@@ -55,7 +55,7 @@ def moveLetters(letters, funcpos):
               for i,letter in enumerate(letters)]
 
 clips = [ CompositeVideoClip( moveLetters(letters,funcpos),
-                              size = screensize).subclip(0,5)
+                              tamano = screensize).subclip(0,5)
           for funcpos in [vortex, cascade, arrive, vortexout] ]
 
 # WE CONCATENATE EVERYTHING AND WRITE TO A FILE

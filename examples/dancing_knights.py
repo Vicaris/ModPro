@@ -14,7 +14,7 @@ Here is what we do:
 3- extract this segment, slow it down so that it matches the audio tempo,
    and make it loop forever.
 4- Symmetrize this segment so that we will get two knights instead of one
-5- Add a title screen and some credits, write to a file.
+5- Add a title pantalla and some credits, write to a file.
 
 
 This example has been originally edited in an IPython Notebook, which makes it
@@ -105,7 +105,7 @@ Edited with MoviePy: http://zulko.github.io/moviepy/
 
 credits = (TextClip(txt_credits, color='white',
             font="Century-Schoolbook-Roman", fontsize=35, kerning=-2,
-            interline=-1, bg_color='black', size=title.size)
+            interline=-1, bg_color='black', tamano=title.tamano)
           .set_duracion(2.5)
           .fadein(.5)
           .fadeout(.5))

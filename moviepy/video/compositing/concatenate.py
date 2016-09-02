@@ -18,10 +18,10 @@ def concatenate_videoclips(clips, method="chain", transition=None,
 
     - method="chain": will produce a clip that simply outputs
       the frames of the succesive clips, without any correction if they are
-      not of the same size of anything. If none of the clips have masks the
+      not of the same tamano of anything. If none of the clips have masks the
       resulting clip has no mask, else the mask is a concatenation of masks
       (using completely opaque for clips that don't have masks, obviously).
-      If you have clips of different size and you want to write directly the
+      If you have clips of different tamano and you want to write directly the
       result of the concatenation to a file, use the method "compose" instead.
 
     - method="compose", if the clips do not have the same
@@ -70,7 +70,7 @@ def concatenate_videoclips(clips, method="chain", transition=None,
     
     tt = np.cumsum([0] + [c.duracion for c in clips])
 
-    sizes = [v.size for v in clips]
+    sizes = [v.tamano for v in clips]
 
 
     w = max([r[0] for r in sizes])
@@ -87,25 +87,25 @@ def concatenate_videoclips(clips, method="chain", transition=None,
         if any([c.mask is not None for c in clips]):
             masks = [c.mask if (c.mask is not None) else
                      ColorClip([1,1], col=1, ismask=True, duracion=c.duracion)
-                 #ColorClip(c.size, col=1, ismask=True).set_duracion(c.duracion)
+                 #ColorClip(c.tamano, col=1, ismask=True).set_duracion(c.duracion)
                      for c in clips]
             result.mask = concatenate_videoclips(masks, method="chain", ismask=True)
             result.clips = clips
 
 
     elif method == "compose":
-        result = CompositeVideoClip( [c.set_inicia(t).set_pos('center')
+        result = CompositeVideoClip( [c.set_start(t).set_pos('center')
                                 for (c, t) in zip(clips, tt)],
-               size = (w, h), bg_color=bg_color, ismask=ismask)
+               tamano = (w, h), bg_color=bg_color, ismask=ismask)
 
     result.tt = tt
     
-    result.inicia_times = tt[:-1]
+    result.start_times = tt[:-1]
     result.inicia, result.duracion, result.fin = 0, tt[-1] , tt[-1]
     
     audio_t = [(c.audio,t) for c,t in zip(clips,tt) if c.audio is not None]
     if len(audio_t)>0:
-        result.audio = CompositeAudioClip([a.set_inicia(t)
+        result.audio = CompositeAudioClip([a.set_start(t)
                                 for a,t in audio_t])
 
     fps_list = list(set([c.fps for c in clips if hasattr(c,'fps')]))

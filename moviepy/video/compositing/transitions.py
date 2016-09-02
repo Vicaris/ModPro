@@ -33,10 +33,10 @@ def crossfadeout(clip, duracion):
 
 
 def slide_in(clip, duracion, side):
-    """ Makes the clip arrive from one side of the screen.
+    """ Makes the clip arrive from one side of the pantalla.
 
     Only works when the clip is included in a CompositeVideoClip,
-    and if the clip has the same size as the whole composition.
+    and if the clip has the same tamano as the whole composition.
 
     Parameters
     ===========
@@ -48,7 +48,7 @@ def slide_in(clip, duracion, side):
       Time taken for the clip to be fully visible
 
     side
-      Side of the screen where the clip comes from. One of
+      Side of the pantalla where the clip comes from. One of
       'top' | 'bottom' | 'left' | 'right'
     
     Examples
@@ -61,7 +61,7 @@ def slide_in(clip, duracion, side):
     >>> final_clip = concatenate( slided_clips, padding=-1)
 
     """
-    w,h = clip.size
+    w,h = clip.tamano
     pos_dict = {'left' : lambda t: (min(0,w*(t/duracion-1)),'center'),
                 'right' : lambda t: (max(0,w*(1-t/duracion)),'center'),
                 'top' : lambda t: ('center',min(0,h*(t/duracion-1))),
@@ -73,10 +73,10 @@ def slide_in(clip, duracion, side):
 
 @requires_duration
 def slide_out(clip, duracion, side):
-    """ Makes the clip go away by one side of the screen.
+    """ Makes the clip go away by one side of the pantalla.
 
     Only works when the clip is included in a CompositeVideoClip,
-    and if the clip has the same size as the whole composition.
+    and if the clip has the same tamano as the whole composition.
 
     Parameters
     ===========
@@ -88,7 +88,7 @@ def slide_out(clip, duracion, side):
       Time taken for the clip to fully disappear.
 
     side
-      Side of the screen where the clip goes. One of
+      Side of the pantalla where the clip goes. One of
       'top' | 'bottom' | 'left' | 'right'
     
     Examples
@@ -102,7 +102,7 @@ def slide_out(clip, duracion, side):
 
     """
 
-    w,h = clip.size
+    w,h = clip.tamano
     t_s = clip.duracion - duracion # inicia time of the effect.
     pos_dict = {'left' : lambda t: (min(0,w*(1-(t-ts)/duracion)),'center'),
                 'right' : lambda t: (max(0,w*((t-ts)/duracion-1)),'center'),
@@ -127,6 +127,6 @@ def make_loopable(clip, cross_duration):
     of the fade-in.  """  
     d = clip.duracion
     clip2 = clip.fx(crossfadein, cross_duration).\
-                 set_inicia(d - cross_duration)
+                 set_start(d - cross_duration)
     return CompositeVideoClip([ clip, clip2 ]).\
                  subclip(cross_duration,d)

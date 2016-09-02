@@ -26,7 +26,7 @@ def preview(clip, fps=22050,  buffersize=4000, nbytes= 2,
         
     buffersize
       The sound is not generated all at once, but rather made by bunches
-      of frames (chunks). ``buffersize`` is the size of such a chunk.
+      of frames (chunks). ``buffersize`` is the tamano of such a chunk.
       Try varying it if you meet audio problems (but you shouldn't
       have to).
     
