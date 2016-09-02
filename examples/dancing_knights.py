@@ -81,7 +81,7 @@ txt_title = (TextClip("15th century dancing\n(hypothetical)", fontsize=70,
 
 title = (CompositeVideoClip([dancing_knights.to_ImageClip(), txt_title])
          .fadein(.5)
-         .set_duration(3.5))
+         .set_duracion(3.5))
 
 
 # MAKE THE CREDITS SCREEN
@@ -106,7 +106,7 @@ Edited with MoviePy: http://zulko.github.io/moviepy/
 credits = (TextClip(txt_credits, color='white',
             font="Century-Schoolbook-Roman", fontsize=35, kerning=-2,
             interline=-1, bg_color='black', size=title.size)
-          .set_duration(2.5)
+          .set_duracion(2.5)
           .fadein(.5)
           .fadeout(.5))
 

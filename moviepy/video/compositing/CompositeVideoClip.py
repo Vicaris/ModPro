@@ -158,7 +158,7 @@ def clips_array(array, rows_widths=None, cols_widths=None,
                 clip = (CompositeVideoClip([clip.set_pos('center')],
                                           size = (cw,rw),
                                           bg_color = bg_color).
-                                     set_duration(clip.duracion))
+                                     set_duracion(clip.duracion))
                 
             array[i,j] = clip.set_pos((x,y))
                  

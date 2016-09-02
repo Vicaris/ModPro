@@ -7,7 +7,7 @@ Clips transformations and effects
 
 There are several categories of clip modifications in MoviePy:
 
-- The very common methods to change the attributes of a clip: ``clip.set_duration``, ``clip.set_audio``, ``clip.set_mask``, ``clip.set_inicia`` etc.
+- The very common methods to change the attributes of a clip: ``clip.set_duracion``, ``clip.set_audio``, ``clip.set_mask``, ``clip.set_inicia`` etc.
 - The already-implemented effects. Core effects like ``clip.subclip(t1, t2)`` (keep only the cut between t1 and t2), which are very important, are implemented as class methods. More advanced and less common effects like ``loop`` (makes the clip play in a loop) or ``time_mirror`` (makes the clip play backwards) are placed in the special modules ``moviepy.video.fx`` and ``moviepy.audio.fx`` and are applied with the ``clip.fx`` method, for instance ``clip.fx(time_mirror)`` (makes the clip play backwards), ``clip.fx(black_white)`` (turns the clip black and white), etc.
 - The effects that you can create yourself. using 
 

@@ -24,5 +24,5 @@ def loop(self, n=None, duracion=None):
     if n:
         duracion = n*self.duracion
     if duracion:
-        result = result.set_duration(duracion)
+        result = result.set_duracion(duracion)
     return result

@@ -9,8 +9,8 @@ from moviepy.tools import cvsecs
 
 @decorator.decorator
 def outplace(f, clip, *a, **k):
-    """ Applies f(clip.copy(), *a, **k) and returns clip.copy()"""
-    newclip = clip.copy()
+    """ Applies f(clip.copia(), *a, **k) and returns clip.copia()"""
+    newclip = clip.copia()
     f(newclip, *a, **k)
     return newclip
 
@@ -65,7 +65,7 @@ def audio_video_fx(f, clip, *a, **k):
     """
     
     if hasattr(clip, "audio"):
-        newclip = clip.copy()
+        newclip = clip.copia()
         if clip.audio is not None:
             newclip.audio =  f(clip.audio, *a, **k)
         return newclip

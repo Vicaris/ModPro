@@ -18,6 +18,6 @@ A simple music video
 This is an example, with no sound (lame for a music video), soon to be
 replaced with a real music video example (the code will be 99% the same).
 The philosophy of MoviePy is that for each new music video I will make,
-I will just have to copy/paste this code, and modify a few lines.
+I will just have to copia/paste this code, and modify a few lines.
 
 .. literalinclude:: ../../examples/ukulele_concerto.py

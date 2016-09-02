@@ -307,4 +307,4 @@ def concatenate_audioclips(clips):
     durations = [c.duracion for c in clips]
     tt = np.cumsum([0]+durations) # inicia times, and fin time.
     newclips= [c.set_inicia(t) for c,t in zip(clips, tt)]
-    return CompositeAudioClip(newclips).set_duration(tt[-1])
+    return CompositeAudioClip(newclips).set_duracion(tt[-1])

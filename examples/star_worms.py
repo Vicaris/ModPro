@@ -101,7 +101,7 @@ final = CompositeVideoClip([
 
 # WRITE TO A FILE
 
-final.set_duration(8).write_videofile("starworms.avi", fps=5)
+final.set_duracion(8).write_videofile("starworms.avi", fps=5)
 
 # This script is heavy (30s of computations to render 8s of video)
 
@@ -132,7 +132,7 @@ def annotate(clip,txt,txt_color='white',bg_color=(0,0,255)):
                         
     cvc =  CompositeVideoClip([clip , txtclip.set_pos((0,'bottom'))])
     
-    return cvc.set_duration(clip.duracion)
+    return cvc.set_duracion(clip.duracion)
 
 
 def resizeCenter(clip):

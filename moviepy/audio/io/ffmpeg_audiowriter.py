@@ -62,7 +62,7 @@ class FFMPEG_AudioWriter:
             '-ac',"%d"%nchannels,
             '-i', '-']
             + (['-vn'] if input_video is None else
-                 [ "-i", input_video, '-vcodec', 'copy'])
+                 [ "-i", input_video, '-vcodec', 'copia'])
             + ['-acodec', codec]
             + ['-ar', "%d"%fps_input]
             + ['-strict', '-2']  # needed to support codec 'aac'

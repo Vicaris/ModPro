@@ -14,7 +14,7 @@ def crossfadein(clip, duracion):
     """ Makes the clip appear progressively, over ``duracion`` seconds.
     Only works when the clip is included in a CompositeVideoClip.
     """
-    newclip = clip.copy()
+    newclip = clip.copia()
     newclip.mask = clip.mask.fx(fadein, duracion)
     return newclip
 
@@ -25,7 +25,7 @@ def crossfadeout(clip, duracion):
     """ Makes the clip disappear progressively, over ``duracion`` seconds.
     Only works when the clip is included in a CompositeVideoClip.
     """
-    newclip = clip.copy()
+    newclip = clip.copia()
     newclip.mask = clip.mask.fx(fadeout, duracion)
     return newclip
 

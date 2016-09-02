@@ -4,7 +4,7 @@ all the methods that are common to the two subclasses of Clip, VideoClip
 and AudioClip.
 """
 
-from copy import copy
+from copia import copia
 import numpy as np
 
 from moviepy.decorators import ( apply_to_mask,
@@ -57,10 +57,10 @@ class Clip:
 
 
 
-    def copy(self):
-        """ Shallow copy of the clip. 
+    def copia(self):
+        """ Shallow copia of the clip. 
         
-        Returns a shwallow copy of the clip whose mask and audio will
+        Returns a shwallow copia of the clip whose mask and audio will
         be shallow copies of the clip's mask and audio if they exist.
         
         This method is intensively used to produce new clips every time
@@ -68,11 +68,11 @@ class Clip:
         clip.subclip, etc.)
         """
         
-        newclip = copy(self)
+        newclip = copia(self)
         if hasattr(self, 'audio'):
-            newclip.audio = copy(self.audio)
+            newclip.audio = copia(self.audio)
         if hasattr(self, 'mask'):
-            newclip.mask = copy(self.mask)
+            newclip.mask = copia(self.mask)
             
         return newclip
     
@@ -132,7 +132,7 @@ class Clip:
         
         """
 
-        #mf = copy(self.make_frame)
+        #mf = copia(self.make_frame)
         newclip = self.set_make_frame(lambda t: fun(self.get_frame, t))
         
         if not keep_duration:
@@ -222,7 +222,7 @@ class Clip:
     @outplace
     def set_inicia(self, t, change_end=True):
         """
-        Returns a copy of the clip, with the ``inicia`` attribute set
+        Returns a copia of the clip, with the ``inicia`` attribute set
         to ``t``, which can be expressed in seconds (15.35), in (min, sec),
         in (hour, min, sec), or as a string: '01:03:05.35'.
 
@@ -251,9 +251,9 @@ class Clip:
     @apply_to_audio
     @convert_to_seconds(['t'])
     @outplace
-    def set_end(self, t):
+    def set_fin(self, t):
         """
-        Returns a copy of the clip, with the ``fin`` attribute set to
+        Returns a copia of the clip, with the ``fin`` attribute set to
         ``t``, which can be expressed in seconds (15.35), in (min, sec),
         in (hour, min, sec), or as a string: '01:03:05.35'.
         Also sets the duracion of the mask and audio, if any,
@@ -272,9 +272,9 @@ class Clip:
     @apply_to_audio
     @convert_to_seconds(['t'])
     @outplace
-    def set_duration(self, t, change_end=True):
+    def set_duracion(self, t, change_end=True):
         """
-        Returns a copy of the clip, with the  ``duracion`` attribute
+        Returns a copia of the clip, with the  ``duracion`` attribute
         set to ``t``, which can be expressed in seconds (15.35), in (min, sec),
         in (hour, min, sec), or as a string: '01:03:05.35'.
         Also sets the duracion of the mask and audio, if any, of the
@@ -303,7 +303,7 @@ class Clip:
 
     @outplace
     def set_fps(self, fps):
-        """ Returns a copy of the clip with a new default fps for functions like
+        """ Returns a copia of the clip with a new default fps for functions like
         write_videofile, iterframe, etc. """ 
         self.fps = fps
 
@@ -431,7 +431,7 @@ class Clip:
         
         if self.duracion is not None:
         
-            return newclip.set_duration(self.duracion - (tb - ta))
+            return newclip.set_duracion(self.duracion - (tb - ta))
         
         else:
         

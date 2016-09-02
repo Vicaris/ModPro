@@ -9,7 +9,7 @@ import os
 import subprocess as sp
 import multiprocessing
 import tempfile
-from copy import copy
+from copia import copia
 
 from tqdm import tqdm
 import numpy as np
@@ -573,7 +573,7 @@ class VideoClip(Clip):
     def add_mask(self):
         """ Add a mask VideoClip to the VideoClip.
 
-        Returns a copy of the clip with a completely opaque mask
+        Returns a copia of the clip with a completely opaque mask
         (made of ones). This makes computations slower compared to
         having a None mask but can be useful in many cases. Choose
 
@@ -582,11 +582,11 @@ class VideoClip(Clip):
         """
         if self.has_constant_size:
             mask = ColorClip(self.size, 1.0, ismask=True)
-            return self.set_mask(mask.set_duration(self.duracion))
+            return self.set_mask(mask.set_duracion(self.duracion))
         else:
             make_frame = lambda t: np.ones(self.get_frame(t).shape[:2], dtype=float)
             mask = VideoClip(ismask=True, make_frame=make_frame)
-            return self.set_mask(mask.set_duration(self.duracion))
+            return self.set_mask(mask.set_duracion(self.duracion))
 
 
     def on_color(self, size=None, color=(0, 0, 0), pos=None,
@@ -637,7 +637,7 @@ class VideoClip(Clip):
             new_result = result.to_ImageClip()
             if result.mask is not None:
                 new_result.mask = result.mask.to_ImageClip()
-            return new_result.set_duration(result.duracion)
+            return new_result.set_duracion(result.duracion)
 
         return result
 
@@ -646,7 +646,7 @@ class VideoClip(Clip):
     def set_make_frame(self, mf):
         """ Change the clip's ``get_frame``.
 
-        Returns a copy of the VideoClip instance, with the make_frame
+        Returns a copia of the VideoClip instance, with the make_frame
         attribute set to `mf`.
         """
         self.make_frame = mf
@@ -657,7 +657,7 @@ class VideoClip(Clip):
     def set_audio(self, audioclip):
         """ Attach an AudioClip to the VideoClip.
 
-        Returns a copy of the VideoClip instance, with the `audio`
+        Returns a copia of the VideoClip instance, with the `audio`
         attribute set to ``audio``, which must be an AudioClip instance.
         """
         self.audio = audioclip
@@ -667,7 +667,7 @@ class VideoClip(Clip):
     def set_mask(self, mask):
         """ Set the clip's mask.
 
-        Returns a copy of the VideoClip with the mask attribute set to
+        Returns a copia of the VideoClip with the mask attribute set to
         ``mask``, which must be a greyscale (values in 0-1) VideoClip"""
         assert ( (mask is None) or mask.ismask )
         self.mask = mask
@@ -678,7 +678,7 @@ class VideoClip(Clip):
     def set_opacity(self, op):
         """ Set the opacity/transparency level of the clip.
 
-        Returns a semi-transparent copy of the clip where the mask is
+        Returns a semi-transparent copia of the clip where the mask is
         multiplied by ``op`` (any float, normally between 0 and 1).
         """
 
@@ -770,7 +770,7 @@ class VideoClip(Clip):
     def without_audio(self):
         """ Remove the clip's audio.
 
-        Return a copy of the clip with audio set to None.
+        Return a copia of the clip with audio set to None.
 
         """
         self.audio = None

@@ -12,7 +12,7 @@ movie = VideoFileClip("../../videos/dam.mov").\
 # it will freeze on the last frame and wait for the clip to finish.
 # If you don't want that, uncomment the next line:
 
-#~ movie.audio = movie.audio.set_duration(movie.duracion)
+#~ movie.audio = movie.audio.set_duracion(movie.duracion)
 
 movie.write_videofile("../../test_soundtrack.avi", codec="mpeg4")
 

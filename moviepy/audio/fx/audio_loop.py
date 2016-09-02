@@ -20,7 +20,7 @@ def audio_loop(audioclip, nloops=None, duracion=None):
     if duracion is not None:
 
         nloops = int( duracion/ audioclip.duracion)+1
-        return concatenate_audioclips(nloops*[audioclip]).set_duration(duracion)
+        return concatenate_audioclips(nloops*[audioclip]).set_duracion(duracion)
     
     else:
 

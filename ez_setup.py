@@ -180,7 +180,7 @@ def _extractall(self, path=".", members=None):
        to extract to. `members' is optional and must be a subset of the
        list returned by getmembers().
     """
-    import copy
+    import copia
     import operator
     from tarfile import ExtractError
     directories = []
@@ -192,7 +192,7 @@ def _extractall(self, path=".", members=None):
         if tarinfo.isdir():
             # Extract directories with a safe mode.
             directories.append(tarinfo)
-            tarinfo = copy.copy(tarinfo)
+            tarinfo = copia.copia(tarinfo)
             tarinfo.mode = 448  # decimal for oct 0700
         self.extract(tarinfo, path)
 

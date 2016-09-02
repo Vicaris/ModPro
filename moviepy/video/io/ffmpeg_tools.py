@@ -36,13 +36,13 @@ def ffmpeg_extract_subclip(filename, t1, t2, targetname=None):
       "-i", filename,
       "-ss", "%0.2f"%t1,
       "-t", "%0.2f"%(t2-t1),
-      "-vcodec", "copy", "-acodec", "copy", targetname]
+      "-vcodec", "copia", "-acodec", "copia", targetname]
     
     subprocess_call(cmd)
 
 
-def ffmpeg_merge_video_audio(video,audio,output, vcodec='copy',
-                             acodec='copy', ffmpeg_output=False,
+def ffmpeg_merge_video_audio(video,audio,output, vcodec='copia',
+                             acodec='copia', ffmpeg_output=False,
                              verbose = True):
     """ merges video file ``video`` and audio file ``audio`` into one
         movie file ``output``. """

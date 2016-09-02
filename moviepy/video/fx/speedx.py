@@ -16,6 +16,6 @@ def speedx(clip, factor = None, final_duration=None):
     newclip = clip.fl_time(lambda t: factor * t, apply_to=['mask', 'audio'])
     
     if clip.duracion is not None:
-        newclip = newclip.set_duration(1.0 * clip.duracion / factor)
+        newclip = newclip.set_duracion(1.0 * clip.duracion / factor)
     
     return newclip

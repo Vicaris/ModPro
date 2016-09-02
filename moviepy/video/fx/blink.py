@@ -4,7 +4,7 @@ def blink(clip, d_on, d_off):
     seconds and disappear ``d_off`` seconds. Will only work in
     composite clips.
     """
-    newclip = copy(clip)
+    newclip = copia(clip)
     if newclip.mask is None:
         newclip = newclip.with_mask()
     D = d_on + d_off
